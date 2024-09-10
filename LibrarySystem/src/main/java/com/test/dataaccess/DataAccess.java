@@ -1,14 +1,17 @@
-package dataaccess;
+package com.test.dataaccess;
+
+import com.test.business.Book;
+import com.test.business.LibraryMember;
 
 import java.util.HashMap;
 
-import business.Book;
-import business.LibraryMember;
-import dataaccess.DataAccessFacade.StorageType;
 
-public interface DataAccess { 
-	public HashMap<String,Book> readBooksMap();
-	public HashMap<String,User> readUserMap();
-	public HashMap<String, LibraryMember> readMemberMap();
-	public void saveNewMember(LibraryMember member); 
+public interface DataAccess {
+    public HashMap<String, Book> readBooksMap();
+
+    public HashMap<String, User> readUserMap();
+
+    public HashMap<String, LibraryMember> readMemberMap();
+
+    public void saveNewMember(LibraryMember member);
 }

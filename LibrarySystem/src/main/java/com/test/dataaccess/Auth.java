@@ -1,4 +1,4 @@
-package dataaccess;
+package com.test.dataaccess;
 
 import java.io.Serializable;
 

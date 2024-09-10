@@ -1,4 +1,7 @@
-package librarysystem;
+package com.test.librarysystem;
+
+import com.test.business.ControllerInterface;
+import com.test.business.SystemController;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,10 +17,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
-import business.ControllerInterface;
-import business.SystemController;
-
 
 public class LibrarySystem extends JFrame implements LibWindow {
 	ControllerInterface ci = new SystemController();
@@ -152,10 +151,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			//AllMemberIdsWindow.INSTANCE.setSize(660,500);
 			Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
 			AllMemberIdsWindow.INSTANCE.setVisible(true);
-			
-			
 		}
-    	
     }
 
 	@Override
@@ -167,7 +163,5 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	@Override
 	public void isInitialized(boolean val) {
 		isInitialized =val;
-		
 	}
-    
 }

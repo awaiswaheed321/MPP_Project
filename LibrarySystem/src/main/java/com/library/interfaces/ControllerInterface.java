@@ -1,4 +1,6 @@
-package com.test.business;
+package com.library.interfaces;
+
+import com.library.exceptions.LoginException;
 
 import java.util.List;
 

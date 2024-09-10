@@ -1,9 +1,11 @@
-package com.test.business;
+package com.library.controllers;
 
-import com.test.dataaccess.Auth;
-import com.test.dataaccess.DataAccess;
-import com.test.dataaccess.DataAccessFacade;
-import com.test.dataaccess.User;
+import com.library.interfaces.ControllerInterface;
+import com.library.exceptions.LoginException;
+import com.library.enums.Auth;
+import com.library.interfaces.DataAccess;
+import com.library.impls.DataAccessFacade;
+import com.library.classes.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

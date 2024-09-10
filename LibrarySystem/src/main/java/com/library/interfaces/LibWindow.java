@@ -1,4 +1,4 @@
-package com.test.librarysystem;
+package com.library.interfaces;
 
 public interface LibWindow {
     void init();

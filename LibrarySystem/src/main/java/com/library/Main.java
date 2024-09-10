@@ -1,4 +1,6 @@
-package com.test.librarysystem;
+package com.library;
+
+import com.library.windows.LibrarySystem;
 
 import javax.swing.*;
 import java.awt.*;

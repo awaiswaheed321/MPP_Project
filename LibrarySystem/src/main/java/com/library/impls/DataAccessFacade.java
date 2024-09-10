@@ -1,7 +1,9 @@
-package com.test.dataaccess;
+package com.library.impls;
 
-import com.test.business.Book;
-import com.test.business.LibraryMember;
+import com.library.classes.Book;
+import com.library.classes.LibraryMember;
+import com.library.classes.User;
+import com.library.interfaces.DataAccess;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -66,19 +68,19 @@ public class DataAccessFacade implements DataAccess {
     ///// - used just once at startup
 
 
-    static void loadBookMap(List<Book> bookList) {
+    public static void loadBookMap(List<Book> bookList) {
         HashMap<String, Book> books = new HashMap<String, Book>();
         bookList.forEach(book -> books.put(book.getIsbn(), book));
         saveToStorage(StorageType.BOOKS, books);
     }
 
-    static void loadUserMap(List<User> userList) {
+    public static void loadUserMap(List<User> userList) {
         HashMap<String, User> users = new HashMap<String, User>();
         userList.forEach(user -> users.put(user.getId(), user));
         saveToStorage(StorageType.USERS, users);
     }
 
-    static void loadMemberMap(List<LibraryMember> memberList) {
+    public static void loadMemberMap(List<LibraryMember> memberList) {
         HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
         memberList.forEach(member -> members.put(member.getMemberId(), member));
         saveToStorage(StorageType.MEMBERS, members);

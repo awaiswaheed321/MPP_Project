@@ -1,7 +1,9 @@
-package com.test.librarysystem;
+package com.library.windows;
 
-import com.test.business.ControllerInterface;
-import com.test.business.SystemController;
+import com.library.interfaces.ControllerInterface;
+import com.library.controllers.SystemController;
+import com.library.interfaces.LibWindow;
+import com.library.utils.Util;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -31,7 +33,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private static LibWindow[] allWindows = { 
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
-		AllMemberIdsWindow.INSTANCE,	
+		AllMemberIdsWindow.INSTANCE,
 		AllBookIdsWindow.INSTANCE
 	};
     	

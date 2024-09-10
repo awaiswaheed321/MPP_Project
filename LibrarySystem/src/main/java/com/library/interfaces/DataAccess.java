@@ -1,7 +1,8 @@
-package com.test.dataaccess;
+package com.library.interfaces;
 
-import com.test.business.Book;
-import com.test.business.LibraryMember;
+import com.library.classes.Book;
+import com.library.classes.LibraryMember;
+import com.library.classes.User;
 
 import java.util.HashMap;
 

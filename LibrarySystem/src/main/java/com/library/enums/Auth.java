@@ -1,4 +1,4 @@
-package com.test.dataaccess;
+package com.library.enums;
 
 import java.io.Serializable;
 

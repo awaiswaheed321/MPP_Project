@@ -1,4 +1,4 @@
-package com.test.business;
+package com.library.exceptions;
 
 import java.io.Serializable;
 

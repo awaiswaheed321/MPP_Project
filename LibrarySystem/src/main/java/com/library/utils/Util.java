@@ -1,9 +1,13 @@
-package com.test.librarysystem;
+package com.library.utils;
+
+import com.library.classes.Book;
+import com.library.classes.LibraryMember;
+import com.library.impls.DataAccessFacade;
+import com.library.interfaces.DataAccess;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
 
 public class Util {
@@ -70,5 +74,37 @@ public class Util {
         int frameHeight = f.getSize().height;
         int frameWidth = f.getSize().width;
         f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
+    }
+
+    //Returns a list of all ids of LibraryMembers whose zipcode contains the digit 3
+    public static List<String> allWhoseZipContains3() {
+        DataAccess da = new DataAccessFacade();
+        Collection<LibraryMember> members = da.readMemberMap().values();
+        List<LibraryMember> mems = new ArrayList<>();
+        mems.addAll(members);
+        //implement
+        return null;
+
+    }
+
+    //Returns a list of all ids of  LibraryMembers that have an overdue book
+    public static List<String> allHavingOverdueBook() {
+        DataAccess da = new DataAccessFacade();
+        Collection<LibraryMember> members = da.readMemberMap().values();
+        List<LibraryMember> mems = new ArrayList<>();
+        mems.addAll(members);
+        //implement
+        return null;
+
+    }
+
+    //Returns a list of all isbns of  Books that have multiple authors
+    public static List<String> allHavingMultipleAuthors() {
+        DataAccess da = new DataAccessFacade();
+        Collection<Book> books = da.readBooksMap().values();
+        List<Book> bs = new ArrayList<>();
+        bs.addAll(books);
+        //implement
+        return null;
     }
 }

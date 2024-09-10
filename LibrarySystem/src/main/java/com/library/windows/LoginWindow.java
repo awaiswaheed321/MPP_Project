@@ -1,4 +1,7 @@
-package com.test.librarysystem;
+package com.library.windows;
+
+import com.library.interfaces.LibWindow;
+import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;

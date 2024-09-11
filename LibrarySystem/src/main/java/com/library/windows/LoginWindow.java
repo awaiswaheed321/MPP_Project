@@ -30,32 +30,66 @@ public class LoginWindow extends LibrarySystemWindow {
     @Override
     public void init() {
         if (isInitialized) return;
+
         mainPanel = new JPanel();
         defineUpperHalf();
         defineMiddleHalf();
         defineLowerHalf();
-        BorderLayout bl = new BorderLayout();
-        bl.setVgap(30);
-        mainPanel.setLayout(bl);
 
-        mainPanel.add(upperHalf, BorderLayout.NORTH);
-        mainPanel.add(middleHalf, BorderLayout.CENTER);
-        mainPanel.add(lowerHalf, BorderLayout.SOUTH);
+        // Use GridBagLayout for centering everything
+        GridBagLayout gbl = new GridBagLayout();
+        GridBagConstraints gbc = new GridBagConstraints();
+        mainPanel.setLayout(gbl);
+
+        // Adding vertical spacers for centering
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weighty = 1.0;  // Spacer at the top (expandable space)
+        gbc.fill = GridBagConstraints.BOTH; // Fills the space vertically and horizontally
+        mainPanel.add(new JPanel(), gbc);  // Empty spacer panel at the top
+
+        // Centered content (upperHalf, middleHalf, lowerHalf)
+        gbc.gridy = 1;
+        gbc.weighty = 0.0; // No vertical expansion for the content
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;  // Do not stretch components in the center
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.add(upperHalf, BorderLayout.NORTH);
+        contentPanel.add(middleHalf, BorderLayout.CENTER);
+        contentPanel.add(lowerHalf, BorderLayout.SOUTH);
+        mainPanel.add(contentPanel, gbc);
+
+        // Spacer at the bottom (expandable space)
+        gbc.gridy = 2;
+        gbc.weighty = 1.0;  // Spacer at the bottom
+        gbc.fill = GridBagConstraints.BOTH;
+        mainPanel.add(new JPanel(), gbc);
+
         getContentPane().add(mainPanel);
-        isInitialized(true);
+        isInitialized = true;
         pack();
     }
 
     private void defineUpperHalf() {
         upperHalf = new JPanel();
-        upperHalf.setLayout(new BorderLayout());
+        upperHalf.setLayout(new GridBagLayout()); // For internal alignment
         defineTopPanel();
         defineMiddlePanel();
         defineLowerPanel();
-        upperHalf.add(topPanel, BorderLayout.NORTH);
-        upperHalf.add(middlePanel, BorderLayout.CENTER);
-        upperHalf.add(lowerPanel, BorderLayout.SOUTH);
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        upperHalf.add(topPanel, gbc);
+
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        upperHalf.add(middlePanel, gbc);
+
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.SOUTH;
+        upperHalf.add(lowerPanel, gbc);
     }
 
     private void defineMiddleHalf() {
@@ -64,12 +98,11 @@ public class LoginWindow extends LibrarySystemWindow {
         JSeparator s = new JSeparator();
         s.setOrientation(SwingConstants.HORIZONTAL);
         middleHalf.add(s, BorderLayout.SOUTH);
-
     }
 
     private void defineLowerHalf() {
         lowerHalf = new JPanel();
-        lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
+        lowerHalf.setLayout(new FlowLayout(FlowLayout.CENTER)); // Centered alignment for buttons
     }
 
     public void defineTopPanel() {
@@ -79,13 +112,13 @@ public class LoginWindow extends LibrarySystemWindow {
         JLabel loginLabel = new JLabel("Login");
         Util.adjustLabelFont(loginLabel, Color.BLUE.darker(), true);
         intPanel.add(loginLabel, BorderLayout.CENTER);
-        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Centered alignment for labels
         topPanel.add(intPanel);
     }
 
     public void defineMiddlePanel() {
         middlePanel = new JPanel();
-        middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        middlePanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Centered alignment for text fields
         defineLeftTextPanel();
         defineRightTextPanel();
         middlePanel.add(leftTextPanel);
@@ -100,7 +133,6 @@ public class LoginWindow extends LibrarySystemWindow {
     }
 
     private void defineLeftTextPanel() {
-
         JPanel topText = new JPanel();
         JPanel bottomText = new JPanel();
         topText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
@@ -119,7 +151,6 @@ public class LoginWindow extends LibrarySystemWindow {
     }
 
     private void defineRightTextPanel() {
-
         JPanel topText = new JPanel();
         JPanel bottomText = new JPanel();
         topText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));

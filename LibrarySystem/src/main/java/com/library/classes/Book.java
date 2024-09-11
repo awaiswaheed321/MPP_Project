@@ -3,9 +3,6 @@ package com.library.classes;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- *
- */
 final public class Book implements Serializable {
 
     private static final long serialVersionUID = 6110690276685962829L;
@@ -39,13 +36,19 @@ final public class Book implements Serializable {
             retVal.add(c.getCopyNum());
         }
         return retVal;
-
     }
 
     public void addCopy() {
         BookCopy[] newArr = new BookCopy[copies.length + 1];
         System.arraycopy(copies, 0, newArr, 0, copies.length);
         newArr[copies.length] = new BookCopy(this, copies.length + 1, true);
+        copies = newArr;
+    }
+
+    public void addCopy(int copyNum) {
+        BookCopy[] newArr = new BookCopy[copies.length + 1];
+        System.arraycopy(copies, 0, newArr, 0, copies.length);
+        newArr[copies.length] = new BookCopy(this, copyNum, true);
         copies = newArr;
     }
 
@@ -64,7 +67,7 @@ final public class Book implements Serializable {
             return false;
         }
         return Arrays.stream(copies)
-                .map(l -> l.isAvailable())
+                .map(BookCopy::isAvailable)
                 .reduce(false, (x, y) -> x || y);
     }
 
@@ -89,6 +92,18 @@ final public class Book implements Serializable {
         return authors;
     }
 
+    public String getAuthorsDisplay() {
+        String authors = "";
+        for (int i = 0; i < this.authors.size(); i++) {
+            Author author = this.authors.get(i);
+            authors += author.getFullName();
+            if (i < this.authors.size() - 1) {
+                authors += ", ";
+            }
+        }
+        return authors;
+    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -96,7 +111,7 @@ final public class Book implements Serializable {
     public BookCopy getNextAvailableCopy() {
         Optional<BookCopy> optional
                 = Arrays.stream(copies)
-                .filter(x -> x.isAvailable()).findFirst();
+                .filter(BookCopy::isAvailable).findFirst();
         return optional.isPresent() ? optional.get() : null;
     }
 

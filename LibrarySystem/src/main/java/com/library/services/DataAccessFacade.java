@@ -1,9 +1,10 @@
-package com.library.impls;
+package com.library.services;
 
 import com.library.classes.Book;
 import com.library.classes.LibraryMember;
 import com.library.classes.User;
 import com.library.interfaces.DataAccess;
+import com.library.utils.DataUtils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,21 +19,29 @@ import java.util.List;
 
 public class DataAccessFacade implements DataAccess {
 
+    private static DataAccessFacade instance;
+
+    public DataAccessFacade() {
+    }
+
+    public static DataAccessFacade getInstance() {
+        if (instance == null) {
+            instance = new DataAccessFacade();
+        }
+        return instance;
+    }
+
     enum StorageType {
         BOOKS, MEMBERS, USERS;
     }
-    // Windows user can use
-	
-	/*public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "\\src\\dataaccess\\storage";*/
 
-    // For Mac Users path can use /
-    public static final String OUTPUT_DIR = System.getProperty("user.dir")
-            + "/src/dataaccess/storage";
+
+    public static final String OUTPUT_DIR = DataUtils.buildPath(System.getProperty("user.dir"), "LibrarySystem", "src", "main", "java", "com", "library", "dataaccess", "storage");
 
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 
-    //implement: other save operations
+
+    // implement: other save operations
     public void saveNewMember(LibraryMember member) {
         HashMap<String, LibraryMember> mems = readMemberMap();
         String memberId = member.getMemberId();
@@ -40,33 +49,36 @@ public class DataAccessFacade implements DataAccess {
         saveToStorage(StorageType.MEMBERS, mems);
     }
 
+    @Override
+    public void saveBook(Book book) {
+        HashMap<String, Book> books = readBooksMap();
+        books.replace(book.getIsbn(), book);
+        saveToStorage(StorageType.BOOKS, books);
+    }
+
     @SuppressWarnings("unchecked")
     public HashMap<String, Book> readBooksMap() {
-        //Returns a Map with name/value pairs being
-        //   isbn -> Book
+        // Returns a Map with name/value pairs being
+        // isbn -> Book
         return (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, LibraryMember> readMemberMap() {
-        //Returns a Map with name/value pairs being
-        //   memberId -> LibraryMember
-        return (HashMap<String, LibraryMember>) readFromStorage(
-                StorageType.MEMBERS);
+        // Returns a Map with name/value pairs being
+        // memberId -> LibraryMember
+        return (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
     }
-
 
     @SuppressWarnings("unchecked")
     public HashMap<String, User> readUserMap() {
-        //Returns a Map with name/value pairs being
-        //   userId -> User
+        // Returns a Map with name/value pairs being
+        // userId -> User
         return (HashMap<String, User>) readFromStorage(StorageType.USERS);
     }
 
-
-    /////load methods - these place test data into the storage area
+    ///// load methods - these place test data into the storage area
     ///// - used just once at startup
-
 
     public static void loadBookMap(List<Book> bookList) {
         HashMap<String, Book> books = new HashMap<String, Book>();
@@ -109,6 +121,7 @@ public class DataAccessFacade implements DataAccess {
         Object retVal = null;
         try {
             Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
+            System.out.println("Path: " + path.toString());
             in = new ObjectInputStream(Files.newInputStream(path));
             retVal = in.readObject();
         } catch (Exception e) {
@@ -125,7 +138,6 @@ public class DataAccessFacade implements DataAccess {
     }
 
     final static class Pair<S, T> implements Serializable {
-
         S first;
         T second;
 
@@ -136,9 +148,12 @@ public class DataAccessFacade implements DataAccess {
 
         @Override
         public boolean equals(Object ob) {
-            if (ob == null) return false;
-            if (this == ob) return true;
-            if (ob.getClass() != getClass()) return false;
+            if (ob == null)
+                return false;
+            if (this == ob)
+                return true;
+            if (ob.getClass() != getClass())
+                return false;
             @SuppressWarnings("unchecked")
             Pair<S, T> p = (Pair<S, T>) ob;
             return p.first.equals(first) && p.second.equals(second);

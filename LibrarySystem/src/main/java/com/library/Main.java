@@ -1,22 +1,18 @@
 package com.library;
 
-import com.library.windows.LibrarySystem;
-
-import javax.swing.*;
 import java.awt.*;
+
+import com.library.utils.Util;
+import com.library.windows.LoginWindow;
 
 
 public class Main {
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(() ->
-        {
-            LibrarySystem.INSTANCE.setTitle("Sample Library Application");
-            LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            LibrarySystem.INSTANCE.init();
-            centerFrameOnDesktop(LibrarySystem.INSTANCE);
-            LibrarySystem.INSTANCE.setVisible(true);
+        EventQueue.invokeLater(() -> {
+            LoginWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
+            LoginWindow.INSTANCE.setVisible(true);
         });
     }
 

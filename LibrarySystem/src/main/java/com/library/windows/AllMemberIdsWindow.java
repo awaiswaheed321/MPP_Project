@@ -1,43 +1,19 @@
 package com.library.windows;
 
-import com.library.interfaces.ControllerInterface;
 import com.library.controllers.SystemController;
-import com.library.interfaces.LibWindow;
+import com.library.interfaces.ControllerInterface;
 import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;
 
-
-public class AllMemberIdsWindow extends JFrame implements LibWindow {
+@SuppressWarnings("serial")
+public class AllMemberIdsWindow extends LibrarySystemWindow {
     public static final AllMemberIdsWindow INSTANCE = new AllMemberIdsWindow();
     ControllerInterface ci = new SystemController();
-    private boolean isInitialized = false;
-
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
-
-    private JPanel mainPanel;
-    private JPanel topPanel;
-    private JPanel middlePanel;
-    private JPanel lowerPanel;
     private TextArea textArea;
 
     private AllMemberIdsWindow() {
-    }
-
-    public void init() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        defineTopPanel();
-        defineMiddlePanel();
-        defineLowerPanel();
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(middlePanel, BorderLayout.CENTER);
-        mainPanel.add(lowerPanel, BorderLayout.SOUTH);
-        getContentPane().add(mainPanel);
-        isInitialized = true;
     }
 
     public void defineTopPanel() {
@@ -54,7 +30,6 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
         middlePanel.setLayout(fl);
         textArea = new TextArea(8, 20);
         middlePanel.add(textArea);
-
     }
 
     public void defineLowerPanel() {
@@ -69,25 +44,4 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
     public void setData(String data) {
         textArea.setText(data);
     }
-
-    private void addBackButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
-            LibrarySystem.hideAllWindows();
-            LibrarySystem.INSTANCE.setVisible(true);
-        });
-    }
-
-    @Override
-    public boolean isInitialized() {
-
-        return isInitialized;
-    }
-
-    @Override
-    public void isInitialized(boolean val) {
-        isInitialized = val;
-
-    }
 }
-
-

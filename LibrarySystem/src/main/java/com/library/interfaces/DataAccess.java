@@ -8,11 +8,13 @@ import java.util.HashMap;
 
 
 public interface DataAccess {
-    public HashMap<String, Book> readBooksMap();
+    HashMap<String, Book> readBooksMap();
 
-    public HashMap<String, User> readUserMap();
+    HashMap<String, User> readUserMap();
 
-    public HashMap<String, LibraryMember> readMemberMap();
+    HashMap<String, LibraryMember> readMemberMap();
 
-    public void saveNewMember(LibraryMember member);
+    void saveNewMember(LibraryMember member);
+
+    void saveBook(Book book);
 }

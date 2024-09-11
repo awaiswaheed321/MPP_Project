@@ -1,25 +1,20 @@
 package com.library.windows;
 
-import com.library.interfaces.LibWindow;
+import com.library.Main;
+import com.library.controllers.SystemController;
 import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class LoginWindow extends JFrame implements LibWindow {
+
+public class LoginWindow extends LibrarySystemWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
 
-    private boolean isInitialized = false;
-
-    private JPanel mainPanel;
     private JPanel upperHalf;
     private JPanel middleHalf;
     private JPanel lowerHalf;
-    private JPanel container;
 
-    private JPanel topPanel;
-    private JPanel middlePanel;
-    private JPanel lowerPanel;
     private JPanel leftTextPanel;
     private JPanel rightTextPanel;
 
@@ -27,28 +22,14 @@ public class LoginWindow extends JFrame implements LibWindow {
     private JTextField password;
     private JLabel label;
     private JButton loginButton;
-    private JButton logoutButton;
-
-
-    public boolean isInitialized() {
-        return isInitialized;
-    }
-
-    public void isInitialized(boolean val) {
-        isInitialized = val;
-    }
-
-    private JTextField messageBar = new JTextField();
-
-    public void clear() {
-        messageBar.setText("");
-    }
 
     /* This class is a singleton */
     private LoginWindow() {
     }
 
+    @Override
     public void init() {
+        if (isInitialized) return;
         mainPanel = new JPanel();
         defineUpperHalf();
         defineMiddleHalf();
@@ -63,13 +44,9 @@ public class LoginWindow extends JFrame implements LibWindow {
         getContentPane().add(mainPanel);
         isInitialized(true);
         pack();
-        //setSize(660, 500);
-
-
     }
 
     private void defineUpperHalf() {
-
         upperHalf = new JPanel();
         upperHalf.setLayout(new BorderLayout());
         defineTopPanel();
@@ -86,23 +63,16 @@ public class LoginWindow extends JFrame implements LibWindow {
         middleHalf.setLayout(new BorderLayout());
         JSeparator s = new JSeparator();
         s.setOrientation(SwingConstants.HORIZONTAL);
-        //middleHalf.add(Box.createRigidArea(new Dimension(0,50)));
         middleHalf.add(s, BorderLayout.SOUTH);
 
     }
 
     private void defineLowerHalf() {
-
         lowerHalf = new JPanel();
         lowerHalf.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        JButton backButton = new JButton("<= Back to Main");
-        addBackButtonListener(backButton);
-        lowerHalf.add(backButton);
-
     }
 
-    private void defineTopPanel() {
+    public void defineTopPanel() {
         topPanel = new JPanel();
         JPanel intPanel = new JPanel(new BorderLayout());
         intPanel.add(Box.createRigidArea(new Dimension(0, 20)), BorderLayout.NORTH);
@@ -111,11 +81,9 @@ public class LoginWindow extends JFrame implements LibWindow {
         intPanel.add(loginLabel, BorderLayout.CENTER);
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(intPanel);
-
     }
 
-
-    private void defineMiddlePanel() {
+    public void defineMiddlePanel() {
         middlePanel = new JPanel();
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         defineLeftTextPanel();
@@ -124,7 +92,7 @@ public class LoginWindow extends JFrame implements LibWindow {
         middlePanel.add(rightTextPanel);
     }
 
-    private void defineLowerPanel() {
+    public void defineLowerPanel() {
         lowerPanel = new JPanel();
         loginButton = new JButton("Login");
         addLoginButtonListener(loginButton);
@@ -169,17 +137,39 @@ public class LoginWindow extends JFrame implements LibWindow {
         rightTextPanel.add(bottomText, BorderLayout.CENTER);
     }
 
-    private void addBackButtonListener(JButton butn) {
+    private void addLoginButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
-            LibrarySystem.hideAllWindows();
-            LibrarySystem.INSTANCE.setVisible(true);
+            String usernameValue = username.getText();
+            String passwordValue = password.getText();
+
+            try {
+                SystemController sc = new SystemController();
+                sc.login(usernameValue, passwordValue);
+                clearInputs();
+                showMainWindow();
+
+            } catch (Exception e) {
+                showLoginError(e.getMessage());
+            }
         });
     }
 
-    private void addLoginButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
-            JOptionPane.showMessageDialog(this, "Successful Login");
+    private void clearInputs() {
+        username.setText("");
+        password.setText("");
+    }
 
-        });
+    private void showLoginError(String msg) {
+        JOptionPane.showMessageDialog(this, msg);
+    }
+
+    private void showMainWindow() {
+        LibrarySystem.hideAllWindows();
+        LibrarySystem.INSTANCE.setTitle("Library Application");
+        LibrarySystem.INSTANCE.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        LibrarySystem.INSTANCE.init();
+        Main.centerFrameOnDesktop(LibrarySystem.INSTANCE);
+        LibrarySystem.INSTANCE.setVisible(true);
     }
 }

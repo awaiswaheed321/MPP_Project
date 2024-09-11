@@ -36,7 +36,7 @@ public class DataAccessFacade implements DataAccess {
     }
 
 
-    public static final String OUTPUT_DIR = DataUtils.buildPath(System.getProperty("user.dir"), "LibrarySystem", "src", "main", "java", "com", "library", "dataaccess", "storage");
+    public static final String OUTPUT_DIR = DataUtils.buildPath(System.getProperty("user.dir"), "LibrarySystem", "src", "main", "resources", "storage");
 
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 

@@ -1,6 +1,5 @@
 package com.library.windows;
 
-import com.library.Main;
 import com.library.controllers.SystemController;
 import com.library.enums.Auth;
 import com.library.interfaces.ControllerInterface;
@@ -63,7 +62,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     private void setPathToImage() {
-        pathToImage = DataUtils.buildPath(System.getProperty("user.dir"), "LibrarySystem", "src", "main", "resources", "library.jpg");
+        pathToImage = DataUtils.buildPath(System.getProperty("user.dir"), "LibrarySystem", "src", "main", "resources", "images/library.jpg");
     }
 
     private void insertSplashImage() {

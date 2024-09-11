@@ -1,4 +1,4 @@
-package com.library.controllers;
+package com.library.services;
 
 import com.library.classes.Book;
 import com.library.classes.CheckoutEntry;
@@ -8,9 +8,6 @@ import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.DataAccess;
-import com.library.services.BookService;
-import com.library.services.DataAccessFacade;
-import com.library.services.MemberService;
 import com.library.utils.PasswordUtil;
 
 import java.util.ArrayList;

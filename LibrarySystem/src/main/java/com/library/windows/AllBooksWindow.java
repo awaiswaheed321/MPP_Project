@@ -7,12 +7,12 @@ import com.library.interfaces.LibWindow;
 import com.library.utils.Util;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.List;
-
 
 public class AllBooksWindow extends JFrame implements LibWindow {
     @Serial
@@ -25,46 +25,62 @@ public class AllBooksWindow extends JFrame implements LibWindow {
     private JPanel topPanel;
     private JPanel middlePanel;
     private JPanel lowerPanel;
-    private TextArea textArea;
+
+    private JTable booksTable;
+    private List<Book> booksList;
 
     // Singleton class
     private AllBooksWindow() {}
 
     public void init() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        defineTopPanel();
-        defineMiddlePanel();
-        defineLowerPanel();
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(middlePanel, BorderLayout.CENTER);
-        mainPanel.add(lowerPanel, BorderLayout.SOUTH);
-        getContentPane().add(mainPanel);
-        isInitialized = true;
+        if (!isInitialized) {
+            mainPanel = new JPanel();
+            mainPanel.setLayout(new BorderLayout());
+            defineTopPanel();
+            defineMiddlePanel();
+            defineLowerPanel();
+            mainPanel.add(topPanel, BorderLayout.NORTH);
+            mainPanel.add(middlePanel, BorderLayout.CENTER);
+            mainPanel.add(lowerPanel, BorderLayout.SOUTH);
+            getContentPane().add(mainPanel);
+            isInitialized = true;
+        }
     }
 
     public void defineTopPanel() {
-        topPanel = new JPanel();
-        JLabel AllIDsLabel = new JLabel("All Book IDs and Titles");
-        Util.adjustLabelFont(AllIDsLabel, Util.DARK_BLUE, true);
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        topPanel.add(AllIDsLabel);
+        if (topPanel == null) {
+            topPanel = new JPanel();
+            JLabel allBooksLabel = new JLabel("All Books and Details");
+            Util.adjustLabelFont(allBooksLabel, Util.DARK_BLUE, true);
+            topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+            topPanel.add(allBooksLabel);
+        }
     }
 
     public void defineMiddlePanel() {
         middlePanel = new JPanel();
-        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 50, 50);
-        middlePanel.setLayout(fl);
-        textArea = new TextArea(8, 50);
-        middlePanel.add(textArea);
+        middlePanel.setLayout(new BorderLayout());
+
+        // Create the table and configure it
+        booksTable = new JTable();
+        booksTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        booksTable.setFillsViewportHeight(true);
+
+        // Populate the table with the initial book data
+        DefaultTableModel tableModel = getBookTableModel();
+        booksTable.setModel(tableModel);
+
+        middlePanel.add(new JScrollPane(booksTable), BorderLayout.CENTER);
     }
 
     public void defineLowerPanel() {
-        JButton backToMainButn = new JButton("<= Back to Main");
-        backToMainButn.addActionListener(new BackToMainListener());
-        lowerPanel = new JPanel();
-        lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        lowerPanel.add(backToMainButn);
+        if (lowerPanel == null) {
+            JButton backToMainButn = new JButton("<= Back to Main");
+            backToMainButn.addActionListener(new BackToMainListener());
+            lowerPanel = new JPanel();
+            lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            lowerPanel.add(backToMainButn);
+        }
     }
 
     static class BackToMainListener implements ActionListener {
@@ -75,13 +91,37 @@ public class AllBooksWindow extends JFrame implements LibWindow {
         }
     }
 
-    // Method to set book data in the TextArea
+    // Method to set book data in the JTable
     public void setData(List<Book> books) {
-        StringBuilder data = new StringBuilder();
-        for (Book book : books) {
-            data.append(book.getIsbn()).append(": ").append(book.getTitle()).append("\n");
+        booksList = books;
+        if(booksTable != null) {
+            DefaultTableModel tableModel = getBookTableModel();
+            booksTable.setModel(tableModel);
+            booksTable.repaint();
         }
-        textArea.setText(data.toString());
+    }
+
+    // Method to create a Table Model for the book data
+    private DefaultTableModel getBookTableModel() {
+        String[] columnNames = {"ISBN", "Title", "Number of Copies", "Max Checkout Length"};
+        String[][] bookData = new String[booksList.size()][4];
+
+        for (int i = 0; i < booksList.size(); i++) {
+            Book book = booksList.get(i);
+            bookData[i] = new String[]{
+                    book.getIsbn(),                               // ISBN
+                    book.getTitle(),                              // Title
+                    String.valueOf(book.getCopies().size()),      // Number of Copies
+                    String.valueOf(book.getMaxCheckoutLength())   // Max Checkout Length
+            };
+        }
+
+        return new DefaultTableModel(bookData, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Make all cells non-editable
+            }
+        };
     }
 
     @Override

@@ -153,10 +153,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
-            AllBooksWindow.INSTANCE.init();
             List<Book> books = ci.getAllBooks();
             books.sort(Comparator.comparing(Book::getIsbn));
             AllBooksWindow.INSTANCE.setData(books);
+            AllBooksWindow.INSTANCE.init();
             AllBooksWindow.INSTANCE.pack();
             Util.centerFrameOnDesktop(AllBooksWindow.INSTANCE);
             AllBooksWindow.INSTANCE.setVisible(true);

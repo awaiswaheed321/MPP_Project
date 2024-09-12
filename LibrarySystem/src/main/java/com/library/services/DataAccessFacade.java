@@ -1,8 +1,6 @@
 package com.library.services;
 
-import com.library.classes.Book;
-import com.library.classes.LibraryMember;
-import com.library.classes.User;
+import com.library.classes.*;
 import com.library.interfaces.DataAccess;
 import com.library.utils.DataUtils;
 
@@ -32,7 +30,7 @@ public class DataAccessFacade implements DataAccess {
     }
 
     enum StorageType {
-        BOOKS, MEMBERS, USERS;
+        BOOKS, MEMBERS, USERS, AUTHORS, ADDRESSES;
     }
 
 
@@ -77,25 +75,51 @@ public class DataAccessFacade implements DataAccess {
         return (HashMap<String, User>) readFromStorage(StorageType.USERS);
     }
 
+    @SuppressWarnings("unchecked")
+    public HashMap<String, Author> readAuthorMap() {
+        // Returns a Map with name/value pairs being
+        // userId -> User
+        return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
+    }
+
+    @SuppressWarnings("unchecked")
+    public HashMap<String, Address> readAddressMap() {
+        // Returns a Map with name/value pairs being
+        // userId -> User
+        return (HashMap<String, Address>) readFromStorage(StorageType.ADDRESSES);
+    }
+
     ///// load methods - these place test data into the storage area
     ///// - used just once at startup
 
-    public static void loadBookMap(List<Book> bookList) {
+    public static void saveBooksData(List<Book> bookList) {
         HashMap<String, Book> books = new HashMap<String, Book>();
         bookList.forEach(book -> books.put(book.getIsbn(), book));
         saveToStorage(StorageType.BOOKS, books);
     }
 
-    public static void loadUserMap(List<User> userList) {
+    public static void saveUsersData(List<User> userList) {
         HashMap<String, User> users = new HashMap<String, User>();
         userList.forEach(user -> users.put(user.getId(), user));
         saveToStorage(StorageType.USERS, users);
     }
 
-    public static void loadMemberMap(List<LibraryMember> memberList) {
+    public static void saveMembersData(List<LibraryMember> memberList) {
         HashMap<String, LibraryMember> members = new HashMap<String, LibraryMember>();
         memberList.forEach(member -> members.put(member.getMemberId(), member));
         saveToStorage(StorageType.MEMBERS, members);
+    }
+
+    public static void saveAuthorsData(List<Author> authorsList) {
+        HashMap<String, Author> authors = new HashMap<String, Author>();
+        authorsList.forEach(author -> authors.put(author.getAuthorId(), author));
+        saveToStorage(StorageType.AUTHORS, authors);
+    }
+
+    public static void saveAddressesData(List<Address> addressList) {
+        HashMap<String, Address> addressHashMap = new HashMap<String, Address>();
+        addressList.forEach(address -> addressHashMap.put(address.getId(), address));
+        saveToStorage(StorageType.ADDRESSES, addressHashMap);
     }
 
     static void saveToStorage(StorageType type, Object ob) {

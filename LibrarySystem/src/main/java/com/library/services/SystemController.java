@@ -1,8 +1,6 @@
 package com.library.services;
 
-import com.library.classes.Book;
-import com.library.classes.CheckoutEntry;
-import com.library.classes.User;
+import com.library.classes.*;
 import com.library.enums.Auth;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
@@ -55,6 +53,16 @@ public class SystemController implements ControllerInterface {
     @Override
     public void saveBook(Book book) {
         da.saveBook(book);
+    }
+
+    @Override
+    public List<Author> getAllAuthors() {
+        return new ArrayList<>(da.readAuthorMap().values());
+    }
+
+    @Override
+    public List<Address> getAllAddress() {
+        return new ArrayList<>(da.readAddressMap().values());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.library.interfaces;
 
+import com.library.classes.Address;
+import com.library.classes.Author;
 import com.library.classes.Book;
 import com.library.classes.CheckoutEntry;
 import com.library.exceptions.LibrarySystemException;
@@ -22,4 +24,6 @@ public interface ControllerInterface {
 
     void saveBook(Book book);
 
+    List<Author> getAllAuthors();
+    List<Address> getAllAddress();
 }

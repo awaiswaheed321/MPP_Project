@@ -1,21 +1,26 @@
 package com.library.classes;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 /* Immutable */
 final public class Address implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -891229800414574888L;
     private String street;
     private String city;
     private String state;
     private String zip;
+    private String id;
 
     public Address(String street, String city, String state, String zip) {
         this.street = street;
         this.city = city;
         this.state = state;
         this.zip = zip;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getStreet() {
@@ -32,6 +37,10 @@ final public class Address implements Serializable {
 
     public String getZip() {
         return zip;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

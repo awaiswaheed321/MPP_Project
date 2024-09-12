@@ -1,6 +1,7 @@
 package com.library.windows;
 
 import com.library.Main;
+import com.library.classes.Author;
 import com.library.classes.Book;
 import com.library.services.SystemController;
 import com.library.enums.Auth;
@@ -27,7 +28,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     JPanel mainPanel;
     JMenuBar menuBar;
     JMenu options;
-    JMenuItem login, allBookIds, allMemberIds, addMembers, checkoutBook, addBookCopy, logout, printCheckoutRecord;
+    JMenuItem allBookIds, addMembers, checkoutBook, addBookCopy, logout, printCheckoutRecord, allAuthors, allAddresses;
     String pathToImage;
     private boolean isInitialized = false;
 
@@ -110,6 +111,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
         allBookIds.addActionListener(new AllBookIdsListener());
         options.add(allBookIds);
 
+        allAuthors = new JMenuItem("Authors");
+        allAuthors.addActionListener(new AuthorsListener());
+        options.add(allAuthors);
+
         if (SystemController.currentAuth != Auth.LIBRARIAN) {
             addBookCopy = new JMenuItem("Add Book Copy");
             addBookCopy.addActionListener(new AddBookCopyListener());
@@ -149,17 +154,30 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     class AllBookIdsListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
-            AllBookIdsWindow.INSTANCE.init();
+            AllBooksWindow.INSTANCE.init();
             List<Book> books = ci.getAllBooks();
             books.sort(Comparator.comparing(Book::getIsbn));
-            AllBookIdsWindow.INSTANCE.setData(books);
-            AllBookIdsWindow.INSTANCE.pack();
-            Util.centerFrameOnDesktop(AllBookIdsWindow.INSTANCE);
-            AllBookIdsWindow.INSTANCE.setVisible(true);
+            AllBooksWindow.INSTANCE.setData(books);
+            AllBooksWindow.INSTANCE.pack();
+            Util.centerFrameOnDesktop(AllBooksWindow.INSTANCE);
+            AllBooksWindow.INSTANCE.setVisible(true);
+        }
+    }
+
+    class AuthorsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibrarySystem.hideAllWindows();
+            AllAuthorsWindow.INSTANCE.init();
+            List<Author> authors = ci.getAllAuthors();
+            authors.sort(Comparator.comparing(Author::getLastName));
+            AllAuthorsWindow.INSTANCE.setData(authors);
+            AllAuthorsWindow.INSTANCE.pack();
+            Util.centerFrameOnDesktop(AllAuthorsWindow.INSTANCE);
+            AllAuthorsWindow.INSTANCE.setVisible(true);
         }
     }
 
@@ -173,7 +191,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
             AllMemberIdsWindow.INSTANCE.setVisible(true);
 
             LibrarySystem.hideAllWindows();
-            AllBookIdsWindow.INSTANCE.init();
+            AllBooksWindow.INSTANCE.init();
 
             List<String> ids = ci.allMemberIds();
             Collections.sort(ids);

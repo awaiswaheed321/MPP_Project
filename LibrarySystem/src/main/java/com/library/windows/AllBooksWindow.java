@@ -14,10 +14,10 @@ import java.io.Serial;
 import java.util.List;
 
 
-public class AllBookIdsWindow extends JFrame implements LibWindow {
+public class AllBooksWindow extends JFrame implements LibWindow {
     @Serial
     private static final long serialVersionUID = 6696979618083051462L;
-    public static final AllBookIdsWindow INSTANCE = new AllBookIdsWindow();
+    public static final AllBooksWindow INSTANCE = new AllBooksWindow();
     ControllerInterface ci = new SystemController();
     private boolean isInitialized = false;
 
@@ -28,7 +28,7 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
     private TextArea textArea;
 
     // Singleton class
-    private AllBookIdsWindow() {}
+    private AllBooksWindow() {}
 
     public void init() {
         mainPanel = new JPanel();

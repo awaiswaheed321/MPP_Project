@@ -7,6 +7,7 @@ import com.library.services.DataAccessFacade;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,9 +26,19 @@ public class TestData {
         td.bookData();
         td.libraryMemberData();
         td.userData();
+        td.addAddresses();
+        td.addAuthors();
         DataAccess da = new DataAccessFacade();
         System.out.println(da.readBooksMap());
         System.out.println(da.readUserMap());
+    }
+
+    private void addAuthors() {
+        DataAccessFacade.saveAuthorsData(allAuthors);
+    }
+
+    private void addAddresses() {
+        DataAccessFacade.saveAddressesData(addresses);
     }
 
     ///create books
@@ -38,11 +49,11 @@ public class TestData {
         allBooks.get(3).addCopy();
         allBooks.get(2).addCopy();
         allBooks.get(2).addCopy();
-        DataAccessFacade.loadBookMap(allBooks);
+        DataAccessFacade.saveBooksData(allBooks);
     }
 
     public void userData() {
-        DataAccessFacade.loadUserMap(allUsers);
+        DataAccessFacade.saveUsersData(allUsers);
     }
 
     //create library members
@@ -58,7 +69,7 @@ public class TestData {
         libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn", "641-472-2871", addresses.get(7));
         members.add(libraryMember);
 
-        DataAccessFacade.loadMemberMap(members);
+        DataAccessFacade.saveMembersData(members);
     }
 
     ///////////// DATA //////////////
@@ -77,32 +88,32 @@ public class TestData {
             add(new Address("501 Central", "Mountain View", "CA", "94707"));
         }
     };
-    @SuppressWarnings("serial")
+
+
     public List<Author> allAuthors = new ArrayList<Author>() {
         {
             add(new Author("Joe", "Thomas", "641-445-2123", addresses.get(0), "A happy man is he."));
             add(new Author("Sandra", "Thomas", "641-445-2123", addresses.get(0), "A happy wife is she."));
             add(new Author("Nirmal", "Pugh", "641-919-3223", addresses.get(1), "Thinker of thoughts."));
-            add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "Author of childrens' books."));
+            add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "Author of children' books."));
             add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3), "Known for her clever style."));
         }
     };
 
-    @SuppressWarnings("serial")
     List<Book> allBooks = new ArrayList<Book>() {
         {
             add(new Book("23-11451", "The Great Escape", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
-            add(new Book("28-12331", "Journey to the Ice", 7, Arrays.asList(allAuthors.get(2))));
-            add(new Book("99-22223", "Java for Experts", 21, Arrays.asList(allAuthors.get(3))));
-            add(new Book("48-56882", "First Day Adventures", 7, Arrays.asList(allAuthors.get(4))));
+            add(new Book("28-12331", "Journey to the Ice", 7, Collections.singletonList(allAuthors.get(2))));
+            add(new Book("99-22223", "Java for Experts", 21, Arrays.asList(allAuthors.get(3),allAuthors.get(1))));
+            add(new Book("48-56882", "First Day Adventures", 7, Collections.singletonList(allAuthors.get(4))));
             add(new Book("23-11452", "The Ocean's Secret", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
-            add(new Book("28-12333", "Frozen Expeditions", 7, Arrays.asList(allAuthors.get(2))));
-            add(new Book("99-22226", "Java Mastery", 21, Arrays.asList(allAuthors.get(3))));
-            add(new Book("48-56888", "School Chronicles", 7, Arrays.asList(allAuthors.get(4))));
+            add(new Book("28-12333", "Frozen Expeditions", 7, Collections.singletonList(allAuthors.get(2))));
+            add(new Book("99-22226", "Java Mastery", 21, Arrays.asList(allAuthors.get(3),allAuthors.get(4))));
+            add(new Book("48-56888", "School Chronicles", 7, Collections.singletonList(allAuthors.get(4))));
             add(new Book("23-11478", "Mysteries of the Deep", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
-            add(new Book("28-12334", "The Antarctic Trek", 7, Arrays.asList(allAuthors.get(2))));
-            add(new Book("99-22245", "Java Unleashed", 21, Arrays.asList(allAuthors.get(3))));
-            add(new Book("48-56892", "Adventures in School", 7, Arrays.asList(allAuthors.get(4))));
+            add(new Book("28-12334", "The Antarctic Trek", 7, Collections.singletonList(allAuthors.get(2))));
+            add(new Book("99-22245", "Java Unleashed", 21, Collections.singletonList(allAuthors.get(3))));
+            add(new Book("48-56892", "Adventures in School", 7, Collections.singletonList(allAuthors.get(4))));
         }
     };
 

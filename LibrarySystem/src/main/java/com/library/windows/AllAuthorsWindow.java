@@ -1,17 +1,19 @@
 package com.library.windows;
 
+import com.library.classes.Address;
 import com.library.classes.Author;
-import com.library.interfaces.LibWindow;
 import com.library.utils.Util;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AllAuthorsWindow extends JFrame implements LibWindow {
+public class AllAuthorsWindow extends LibrarySystemWindow {
     @Serial
     private static final long serialVersionUID = 1L;
     public static final AllAuthorsWindow INSTANCE = new AllAuthorsWindow();
@@ -21,46 +23,67 @@ public class AllAuthorsWindow extends JFrame implements LibWindow {
     private JPanel topPanel;
     private JPanel middlePanel;
     private JPanel lowerPanel;
-    private TextArea textArea;
+    private JTable jtable;
+    List<Author> authorsList;
 
     // Singleton class
-    private AllAuthorsWindow() {}
+    private AllAuthorsWindow() {
+    }
 
+    @Override
     public void init() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        defineTopPanel();
-        defineMiddlePanel();
-        defineLowerPanel();
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(middlePanel, BorderLayout.CENTER);
-        mainPanel.add(lowerPanel, BorderLayout.SOUTH);
-        getContentPane().add(mainPanel);
-        isInitialized = true;
+        if (!isInitialized) {
+            mainPanel = new JPanel();
+            mainPanel.setLayout(new BorderLayout());
+            defineTopPanel();
+            defineMiddlePanel();
+            defineLowerPanel();
+            mainPanel.add(topPanel, BorderLayout.NORTH);
+            mainPanel.add(middlePanel, BorderLayout.CENTER);
+            mainPanel.add(lowerPanel, BorderLayout.SOUTH);
+            getContentPane().add(mainPanel);
+            isInitialized = true;
+        }
     }
 
+    @Override
     public void defineTopPanel() {
-        topPanel = new JPanel();
-        JLabel allAuthorsLabel = new JLabel("All Authors and Biographies");
-        Util.adjustLabelFont(allAuthorsLabel, Util.DARK_BLUE, true);
-        topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        topPanel.add(allAuthorsLabel);
+        if (topPanel == null) {
+            topPanel = new JPanel();
+            JLabel allAuthorsLabel = new JLabel("All Authors and Biographies");
+            Util.adjustLabelFont(allAuthorsLabel, Util.DARK_BLUE, true);
+            topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+            topPanel.add(allAuthorsLabel);
+        }
     }
 
+    @Override
     public void defineMiddlePanel() {
         middlePanel = new JPanel();
-        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 50, 50);
-        middlePanel.setLayout(fl);
-        textArea = new TextArea(8, 50);
-        middlePanel.add(textArea);
+        middlePanel.setLayout(new BorderLayout());
+        jtable = new JTable();
+        jtable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jtable.setFillsViewportHeight(true);
+        DefaultTableModel tableModel = getAuthorTableModel();
+        jtable.setModel(tableModel);
+        jtable.repaint();
+        middlePanel.add(new JScrollPane(jtable), BorderLayout.CENTER);
     }
 
+    @Override
     public void defineLowerPanel() {
-        JButton backToMainButn = new JButton("<= Back to Main");
-        backToMainButn.addActionListener(new BackToMainListener());
-        lowerPanel = new JPanel();
-        lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        lowerPanel.add(backToMainButn);
+        if (lowerPanel == null) {
+            JButton backToMainBtn = new JButton("<= Back to Main");
+            backToMainBtn.addActionListener(new BackToMainListener());
+
+            JButton addAuthorButton = new JButton("Add Author");
+            addAuthorButton.addActionListener(new AddAuthorListener());
+
+            lowerPanel = new JPanel();
+            lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            lowerPanel.add(backToMainBtn);
+            lowerPanel.add(addAuthorButton);
+        }
     }
 
     static class BackToMainListener implements ActionListener {
@@ -71,24 +94,48 @@ public class AllAuthorsWindow extends JFrame implements LibWindow {
         }
     }
 
-    // Method to set author data in the TextArea
-    public void setData(List<Author> authors) {
-        StringBuilder data = new StringBuilder();
-        for (Author author : authors) {
-            data.append("Author ID: ").append(author.getAuthorId()).append("\n");
-            data.append("Name: ").append(author.getFirstName()).append(" ").append(author.getLastName()).append("\n");
-            data.append("Bio: ").append(author.getBio()).append("\n\n");
+    private static class AddAuthorListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AddAuthorWindow.INSTANCE.init();
+            Util.centerFrameOnDesktop(AddAuthorWindow.INSTANCE);
+            AddAuthorWindow.INSTANCE.setVisible(true);
         }
-        textArea.setText(data.toString());
     }
 
-    @Override
-    public boolean isInitialized() {
-        return isInitialized;
+    public void setData(List<Author> authors) {
+        authorsList = authors;
+        if (jtable != null) {
+            DefaultTableModel tableModel = getAuthorTableModel();
+            jtable.setModel(tableModel);
+            jtable.repaint(); // Refresh the table to show updated data
+        }
     }
 
-    @Override
-    public void isInitialized(boolean val) {
-        isInitialized = val;
+    public DefaultTableModel getAuthorTableModel() {
+        String[] columnNames = {"Author ID", "First Name", "Last Name", "Telephone", "Street", "City", "State", "Zip", "Bio"};
+        String[][] authorData = new String[authorsList.size()][9];
+
+        for (int i = 0; i < authorsList.size(); i++) {
+            Author author = authorsList.get(i);
+            Address address = author.getAddress();
+            authorData[i] = new String[]{
+                    author.getAuthorId(),               // Author ID
+                    author.getFirstName(),              // First Name
+                    author.getLastName(),               // Last Name
+                    author.getTelephone(),              // Telephone
+                    address.getStreet(),                // Street
+                    address.getCity(),                  // City
+                    address.getState(),                 // State
+                    address.getZip(),                   // Zip
+                    author.getBio()                     // Bio
+            };
+        }
+        return new DefaultTableModel(authorData, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;  // Make all cells non-editable
+            }
+        };
     }
 }

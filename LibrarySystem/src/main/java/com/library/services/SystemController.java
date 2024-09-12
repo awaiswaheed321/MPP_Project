@@ -61,11 +61,6 @@ public class SystemController implements ControllerInterface {
     }
 
     @Override
-    public List<Address> getAllAddress() {
-        return new ArrayList<>(da.readAddressMap().values());
-    }
-
-    @Override
     public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException {
         return new BookService().checkout(memberId, isbn);
     }

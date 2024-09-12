@@ -144,15 +144,14 @@ public class AddMemberWindow extends LibrarySystemWindow {
 
             da.saveNewMember(lm);
             JOptionPane.showMessageDialog(this, "Member Added!");
-            memberIdTextField.setText("");
-            memberFirstNameTextField.setText("");
-            memberLastNameTextField.setText("");
-            memberPhoneTextField.setText("");
-
             memberStreetTextField.setText("");
             memberCityTextField.setText("");
             memberStateTextField.setText("");
             memberZipTextField.setText("");
+            memberIdTextField.setText("");
+            memberFirstNameTextField.setText("");
+            memberLastNameTextField.setText("");
+            memberPhoneTextField.setText("");
         });
         middlePanel.add(checkoutButton);
     }

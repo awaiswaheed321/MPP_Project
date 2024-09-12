@@ -111,15 +111,17 @@ public class DataAccessFacade implements DataAccess {
     }
 
     public static void saveAuthorsData(List<Author> authorsList) {
-        HashMap<String, Author> authors = new HashMap<String, Author>();
+        HashMap<String, Author> authors = new HashMap<>();
         authorsList.forEach(author -> authors.put(author.getAuthorId(), author));
         saveToStorage(StorageType.AUTHORS, authors);
     }
 
-    public static void saveAddressesData(List<Address> addressList) {
-        HashMap<String, Address> addressHashMap = new HashMap<String, Address>();
-        addressList.forEach(address -> addressHashMap.put(address.getId(), address));
-        saveToStorage(StorageType.ADDRESSES, addressHashMap);
+    @Override
+    public void saveNewAuthor(Author author) {
+        HashMap<String, Author> authors = readAuthorMap();
+        String id = author.getAuthorId();
+        authors.put(id, author);
+        saveToStorage(StorageType.AUTHORS, authors);
     }
 
     static void saveToStorage(StorageType type, Object ob) {

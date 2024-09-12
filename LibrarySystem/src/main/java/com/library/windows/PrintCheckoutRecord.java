@@ -26,11 +26,9 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
     private JPanel rightTextPanel;
 
     private JTextField username;
-    //    private JTextField password;
     private JLabel label;
     private JButton searchButton;
 
-    /* This class is a singleton */
     private PrintCheckoutRecord() {
     }
 
@@ -139,7 +137,7 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
                 try {
                     LibraryMember lm = ms.getMember(memberId);
                     List<CheckoutEntry> lmCheckout = lm.getCheckouts();
-                    if (lmCheckout == null || lmCheckout.size() == 0) {
+                    if (lmCheckout == null || lmCheckout.isEmpty()) {
                         JOptionPane.showMessageDialog(this, "No Checkout Records Exits");
                         return;
                     }

@@ -5,10 +5,7 @@ import com.library.enums.Auth;
 import com.library.interfaces.DataAccess;
 import com.library.services.DataAccessFacade;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class loads data into the data repository and also
@@ -19,14 +16,11 @@ import java.util.List;
  * folder.
  */
 public class TestData {
-
-
     public static void main(String[] args) {
         TestData td = new TestData();
         td.bookData();
         td.libraryMemberData();
         td.userData();
-        td.addAddresses();
         td.addAuthors();
         DataAccess da = new DataAccessFacade();
         System.out.println(da.readBooksMap());
@@ -35,10 +29,6 @@ public class TestData {
 
     private void addAuthors() {
         DataAccessFacade.saveAuthorsData(allAuthors);
-    }
-
-    private void addAddresses() {
-        DataAccessFacade.saveAddressesData(addresses);
     }
 
     ///create books

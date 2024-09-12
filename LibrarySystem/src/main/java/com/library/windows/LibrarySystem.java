@@ -1,5 +1,6 @@
 package com.library.windows;
 
+import com.library.Main;
 import com.library.services.SystemController;
 import com.library.enums.Auth;
 import com.library.interfaces.ControllerInterface;
@@ -33,8 +34,12 @@ public class LibrarySystem extends JFrame implements LibWindow {
     private static LibWindow[] allWindows = {
             LibrarySystem.INSTANCE,
             LoginWindow.INSTANCE,
+            ResearchBookWindow.INSTANCE,
+            AddBookCopyWindow.INSTANCE,
+            AddMemberWindow.INSTANCE,
             CheckoutBookWindow.INSTANCE,
-            CheckoutRecordWindow.INSTANCE
+            CheckoutRecordWindow.INSTANCE,
+            PrintCheckoutRecord.INSTANCE
     };
 
     public static void hideAllWindows() {
@@ -105,10 +110,14 @@ public class LibrarySystem extends JFrame implements LibWindow {
 
         if (SystemController.currentAuth != Auth.LIBRARIAN) {
             addBookCopy = new JMenuItem("Add Book Copy");
+            addBookCopy.addActionListener(new AddBookCopyListener());
             options.add(addBookCopy);
 
             addMembers = new JMenuItem("Add Members");
+            addMembers.addActionListener(new AddMemberListener());
             options.add(addMembers);
+
+
         }
 
         if (SystemController.currentAuth != Auth.ADMIN) {
@@ -117,6 +126,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
             options.add(checkoutBook);
 
             printCheckoutRecord = new JMenuItem("Print Checkout Record");
+            printCheckoutRecord.addActionListener(new printCheckoutRecords());
             options.add(printCheckoutRecord);
         }
 
@@ -185,7 +195,54 @@ public class LibrarySystem extends JFrame implements LibWindow {
         }
     }
 
+    class AddBookCopyListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibrarySystem.hideAllWindows();
+            ResearchBookWindow.INSTANCE.init();
+            ResearchBookWindow.INSTANCE.pack();
+            ResearchBookWindow.INSTANCE.setSize((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.5));
+            Util.centerFrameOnDesktop(ResearchBookWindow.INSTANCE);
+            ResearchBookWindow.INSTANCE.setVisible(true);
+        }
+    }
+
+    class AddMemberListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibrarySystem.hideAllWindows();
+            AddMemberWindow.INSTANCE.init();
+            AddMemberWindow.INSTANCE.pack();
+            AddMemberWindow.INSTANCE.setSize(670, 400);
+            AddMemberWindow.INSTANCE.setVisible(true);
+            Main.centerFrameOnDesktop(AddMemberWindow.INSTANCE);
+
+
+//            LibrarySystem.hideAllWindows();
+//            AllBookIdsWindow.INSTANCE.init();
+
+//            List<String> ids = ci.allMemberIds();
+//            Collections.sort(ids);
+//            StringBuilder sb = new StringBuilder();
+//            for (String s : ids) {
+//                sb.append(s + "\n");
+//            }
+//            System.out.println(sb.toString());
+//            AllMemberIdsWindow.INSTANCE.setData(sb.toString());
+//            AllMemberIdsWindow.INSTANCE.pack();
+//            //AllMemberIdsWindow.INSTANCE.setSize(660,500);
+//            Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
+//            AllMemberIdsWindow.INSTANCE.setVisible(true);
+
+
+        }
+
+    }
+
     class CheckoutBookListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
@@ -193,6 +250,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
             CheckoutBookWindow.INSTANCE.pack();
             CheckoutBookWindow.INSTANCE.setVisible(true);
         }
+
     }
 
     class LogoutListener implements ActionListener {
@@ -203,6 +261,18 @@ public class LibrarySystem extends JFrame implements LibWindow {
             LoginWindow.INSTANCE.init();
             Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
             LoginWindow.INSTANCE.setVisible(true);
+        }
+    }
+
+    class printCheckoutRecords implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibrarySystem.hideAllWindows();
+            PrintCheckoutRecord.INSTANCE.init();
+            PrintCheckoutRecord.INSTANCE.pack();
+            PrintCheckoutRecord.INSTANCE.setSize(400, 200);
+            PrintCheckoutRecord.INSTANCE.setVisible(true);
+            Main.centerFrameOnDesktop(PrintCheckoutRecord.INSTANCE);
         }
     }
 

@@ -106,7 +106,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
         options = new JMenu("Options");
         menuBar.add(options);
 
-        allBookIds = new JMenuItem("All Book Ids");
+        allBookIds = new JMenuItem("Book Collection");
         allBookIds.addActionListener(new AllBookIdsListener());
         options.add(allBookIds);
 

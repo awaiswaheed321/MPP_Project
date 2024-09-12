@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class CheckoutEntry implements Serializable {
-    private static final long serialVersionUID = -6050615539255649506L;
+    private static final long serialVersionUID = -1887001394016169960L;
     private LibraryMember member;
     private BookCopy bookCopy;
     private LocalDate checkOutDate;

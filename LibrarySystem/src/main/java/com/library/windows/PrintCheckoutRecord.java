@@ -28,7 +28,7 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
     private JTextField username;
     //    private JTextField password;
     private JLabel label;
-    private JButton loginButton;
+    private JButton searchButton;
 
     /* This class is a singleton */
     private PrintCheckoutRecord() {
@@ -117,25 +117,22 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
         leftTextPanel.add(topText, BorderLayout.NORTH);
         leftTextPanel.add(bottomText, BorderLayout.CENTER);
 
-
-        loginButton = new JButton("Check Member");
-        addLoginButtonListener(loginButton);
-        leftTextPanel.add(loginButton);
+        searchButton = new JButton("Check Member");
+        addSearchButtonListener(searchButton);
+        leftTextPanel.add(searchButton);
     }
 
     private void defineRightTextPanel() {
-
         JPanel topText = new JPanel();
         JPanel bottomText = new JPanel();
         topText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
         bottomText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
-
         rightTextPanel = new JPanel();
         rightTextPanel.setLayout(new BorderLayout());
         rightTextPanel.add(topText, BorderLayout.NORTH);
     }
 
-    private void addLoginButtonListener(JButton butn) {
+    private void addSearchButtonListener(JButton butn) {
         butn.addActionListener(evt -> {
             String memberId = username.getText();
             if (ci.isValidMember(memberId)) {
@@ -149,14 +146,17 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
                     for (CheckoutEntry ce : lmCheckout) {
                         System.out.println(ce.toString());
                     }
-                    JOptionPane.showMessageDialog(this, "Checkout Info In Console");
+                    LibrarySystem.hideAllWindows();
+                    CheckoutRecordWindow.INSTANCE.setCheckoutEntries(lmCheckout);
+                    CheckoutRecordWindow.INSTANCE.init();
+                    CheckoutRecordWindow.INSTANCE.pack();
+                    CheckoutRecordWindow.INSTANCE.setVisible(true);
                 } catch (LibraryMemberNotFoundException e) {
-                    // TODO Auto-generated catch block
-
+                    JOptionPane.showMessageDialog(this, "The Member ID was not found!");
+                    clearInputs();
                 }
-
             } else {
-                JOptionPane.showMessageDialog(this, "User Does not Exits");
+                JOptionPane.showMessageDialog(this, "Member Does not Exits");
                 clearInputs();
             }
         });

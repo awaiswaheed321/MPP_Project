@@ -25,4 +25,6 @@ public interface ControllerInterface {
     void saveBook(Book book);
 
     List<Author> getAllAuthors();
+
+    void saveNewBook(Book book);
 }

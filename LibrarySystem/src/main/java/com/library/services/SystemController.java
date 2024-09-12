@@ -61,6 +61,11 @@ public class SystemController implements ControllerInterface {
     }
 
     @Override
+    public void saveNewBook(Book book) {
+        da.saveNewBook(book);
+    }
+
+    @Override
     public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException {
         return new BookService().checkout(memberId, isbn);
     }

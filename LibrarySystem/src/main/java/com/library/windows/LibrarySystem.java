@@ -26,7 +26,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     JPanel mainPanel;
     JMenuBar menuBar;
     JMenu menu;
-    JMenuItem allBookIds, addMembers, checkoutBook, addBookCopy, logout, printCheckoutRecord, allAuthors, allAddresses;
+    JMenuItem allBookIds, addMembers, checkoutBook, addBookCopy, logout, printCheckoutRecord, allAuthors, addBook, allAddresses;
     String pathToImage;
     private boolean isInitialized = false;
 
@@ -43,7 +43,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
             PrintCheckoutRecord.INSTANCE,
             AllBooksWindow.INSTANCE,
             AllAuthorsWindow.INSTANCE,
-            AddAuthorWindow.INSTANCE
+            AddAuthorWindow.INSTANCE,
+            AllBooksWindow.INSTANCE
     };
 
     public static void hideAllWindows() {
@@ -124,6 +125,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
             addMembers = new JMenuItem("Add Members");
             addMembers.addActionListener(new AddMemberListener());
             menu.add(addMembers);
+
+            addBook = new JMenuItem("Add Book");
+            addBook.addActionListener(new AddBookListener());
+            menu.add(addBook);
         }
         if (SystemController.currentAuth != Auth.ADMIN) {
             checkoutBook = new JMenuItem("Checkout book");
@@ -258,6 +263,18 @@ public class LibrarySystem extends JFrame implements LibWindow {
             PrintCheckoutRecord.INSTANCE.setSize(400, 200);
             PrintCheckoutRecord.INSTANCE.setVisible(true);
             Main.centerFrameOnDesktop(PrintCheckoutRecord.INSTANCE);
+        }
+    }
+
+    static class AddBookListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibrarySystem.hideAllWindows();
+            AddBookWindow.INSTANCE.init();
+            AddBookWindow.INSTANCE.pack();
+            AddBookWindow.INSTANCE.setSize(400, 400);
+            Util.centerFrameOnDesktop(AddBookWindow.INSTANCE);
+            AddBookWindow.INSTANCE.setVisible(true);
         }
     }
 

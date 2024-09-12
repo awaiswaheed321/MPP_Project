@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class DataAccessFacade implements DataAccess {
@@ -122,6 +123,13 @@ public class DataAccessFacade implements DataAccess {
         String id = author.getAuthorId();
         authors.put(id, author);
         saveToStorage(StorageType.AUTHORS, authors);
+    }
+
+    @Override
+    public void saveNewBook(Book book) {
+        Map<String, Book> books = readBooksMap();
+        books.put(book.getIsbn(), book);
+        saveToStorage(StorageType.BOOKS, books);
     }
 
     static void saveToStorage(StorageType type, Object ob) {

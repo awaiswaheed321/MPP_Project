@@ -77,6 +77,7 @@ public class AllBooksWindow extends JFrame implements LibWindow {
         if (lowerPanel == null) {
             JButton backToMainButn = new JButton("<= Back to Main");
             backToMainButn.addActionListener(new BackToMainListener());
+
             lowerPanel = new JPanel();
             lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             lowerPanel.add(backToMainButn);

@@ -19,4 +19,6 @@ public interface DataAccess {
     void saveBook(Book book);
 
     void saveNewAuthor(Author author);
+
+    void saveNewBook(Book book);
 }

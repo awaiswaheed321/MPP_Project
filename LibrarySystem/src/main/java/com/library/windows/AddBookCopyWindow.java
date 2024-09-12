@@ -61,7 +61,7 @@ public class AddBookCopyWindow extends LibrarySystemWindow {
         bookIsbn = new JLabel("ISBN: " + this.book.getIsbn());
         bookTitle = new JLabel("Title: " + this.book.getTitle());
         bookAuthor = new JLabel("Authors: " + this.book.getAuthorsDisplay());
-        bookCopies = new JLabel("Copies: " + this.book.getCopies().length);
+        bookCopies = new JLabel("Copies: " + this.book.getCopies().size());
         bookDescriptionPanel.add(bookIsbn);
         bookDescriptionPanel.add(bookTitle);
         bookDescriptionPanel.add(bookAuthor);
@@ -78,7 +78,7 @@ public class AddBookCopyWindow extends LibrarySystemWindow {
 
         JLabel label = new JLabel("Copy Number");
         copyNumTextField = new JTextField();
-        copyNumTextField.setText(String.valueOf(book.getCopies().length + 1));
+        copyNumTextField.setText(String.valueOf(book.getCopies().size() + 1));
         copyNumTextField.setColumns(30);
         copyNumTextField.addKeyListener(new KeyListener() {
             @Override
@@ -123,7 +123,7 @@ public class AddBookCopyWindow extends LibrarySystemWindow {
 
             ResearchBookWindow.INSTANCE.reloadBooks();
 
-            bookCopies.setText("Copies: " + this.book.getCopies().length);
+            bookCopies.setText("Copies: " + this.book.getCopies().size());
             bookCopies.repaint();
 
             JOptionPane.showMessageDialog(this, "Book Copy added successfully.");

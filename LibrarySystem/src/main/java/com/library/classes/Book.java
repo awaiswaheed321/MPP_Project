@@ -6,7 +6,7 @@ import java.util.*;
 final public class Book implements Serializable {
 
     private static final long serialVersionUID = 6110690276685962829L;
-    private BookCopy[] copies;
+    private List<BookCopy> copies;
     private List<Author> authors;
     private String isbn;
     private String title;
@@ -17,39 +17,17 @@ final public class Book implements Serializable {
         this.title = title;
         this.maxCheckoutLength = maxCheckoutLength;
         this.authors = Collections.unmodifiableList(authors);
-        copies = new BookCopy[]{new BookCopy(this, 1, true)};
+        copies = new ArrayList<>();
+        copies.add(new BookCopy(this, 1, true));
     }
 
-    public void updateCopies(BookCopy copy) {
-        for (int i = 0; i < copies.length; ++i) {
-            BookCopy c = copies[i];
-            if (c.equals(copy)) {
-                copies[i] = copy;
-
-            }
-        }
-    }
-
-    public List<Integer> getCopyNums() {
-        List<Integer> retVal = new ArrayList<>();
-        for (BookCopy c : copies) {
-            retVal.add(c.getCopyNum());
-        }
-        return retVal;
-    }
 
     public void addCopy() {
-        BookCopy[] newArr = new BookCopy[copies.length + 1];
-        System.arraycopy(copies, 0, newArr, 0, copies.length);
-        newArr[copies.length] = new BookCopy(this, copies.length + 1, true);
-        copies = newArr;
+        copies.add(new BookCopy(this, copies.size() + 1, true));
     }
 
     public void addCopy(int copyNum) {
-        BookCopy[] newArr = new BookCopy[copies.length + 1];
-        System.arraycopy(copies, 0, newArr, 0, copies.length);
-        newArr[copies.length] = new BookCopy(this, copyNum, true);
-        copies = newArr;
+        copies.add(new BookCopy(this, copyNum, true));
     }
 
 
@@ -63,10 +41,10 @@ final public class Book implements Serializable {
 
 
     public boolean isAvailable() {
-        if (copies == null) {
+        if (copies == null || copies.isEmpty()) {
             return false;
         }
-        return Arrays.stream(copies)
+        return copies.stream()
                 .map(BookCopy::isAvailable)
                 .reduce(false, (x, y) -> x || y);
     }
@@ -77,14 +55,14 @@ final public class Book implements Serializable {
     }
 
     public int getNumCopies() {
-        return copies.length;
+        return copies.size();
     }
 
     public String getTitle() {
         return title;
     }
 
-    public BookCopy[] getCopies() {
+    public List<BookCopy> getCopies() {
         return copies;
     }
 
@@ -110,9 +88,9 @@ final public class Book implements Serializable {
 
     public BookCopy getNextAvailableCopy() {
         Optional<BookCopy> optional
-                = Arrays.stream(copies)
+                = copies.stream()
                 .filter(BookCopy::isAvailable).findFirst();
-        return optional.isPresent() ? optional.get() : null;
+        return optional.orElse(null);
     }
 
     public BookCopy getCopy(int copyNum) {

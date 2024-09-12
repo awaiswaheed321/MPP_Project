@@ -171,7 +171,7 @@ public class ResearchBookWindow extends LibrarySystemWindow {
         String[][] booksData = new String[books.size()][4];
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            booksData[i] = new String[]{book.getIsbn(), book.getTitle(), book.getAuthorsDisplay(), String.valueOf(book.getCopies().length)};
+            booksData[i] = new String[]{book.getIsbn(), book.getTitle(), book.getAuthorsDisplay(), String.valueOf(book.getCopies().size())};
         }
 
         return booksData;

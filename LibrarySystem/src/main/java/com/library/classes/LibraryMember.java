@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 final public class LibraryMember extends Person implements Serializable {
-    private String memberId;
+    private final String memberId;
     private List<CheckoutEntry> checkouts;
 
     public LibraryMember(String memberId, String fname, String lname, String tel, Address add) {

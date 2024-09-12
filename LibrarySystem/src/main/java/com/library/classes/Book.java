@@ -1,16 +1,17 @@
 package com.library.classes;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
 final public class Book implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 6110690276685962829L;
-    private List<BookCopy> copies;
-    private List<Author> authors;
-    private String isbn;
-    private String title;
-    private int maxCheckoutLength;
+    private final List<BookCopy> copies;
+    private final List<Author> authors;
+    private final String isbn;
+    private final String title;
+    private final int maxCheckoutLength;
 
     public Book(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
         this.isbn = isbn;
@@ -44,9 +45,7 @@ final public class Book implements Serializable {
         if (copies == null || copies.isEmpty()) {
             return false;
         }
-        return copies.stream()
-                .map(BookCopy::isAvailable)
-                .reduce(false, (x, y) -> x || y);
+        return copies.stream().anyMatch(BookCopy::isAvailable);
     }
 
     @Override
@@ -89,7 +88,8 @@ final public class Book implements Serializable {
     public BookCopy getNextAvailableCopy() {
         Optional<BookCopy> optional
                 = copies.stream()
-                .filter(BookCopy::isAvailable).findFirst();
+                .filter(BookCopy::isAvailable)
+                .findFirst();
         return optional.orElse(null);
     }
 

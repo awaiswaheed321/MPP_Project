@@ -1,8 +1,10 @@
 package com.library.classes;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Person implements Serializable {
+    @Serial
     private static final long serialVersionUID = 3665880920647848288L;
     private String firstName;
     private String lastName;

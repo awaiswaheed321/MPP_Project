@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 final public class Author extends Person implements Serializable {
-    private String bio;
-    private String authorId;
+    private final String bio;
+    private final String authorId;
     public String getBio() {
         return bio;
     }

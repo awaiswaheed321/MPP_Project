@@ -1,5 +1,6 @@
 package com.library.windows;
 
+import com.library.classes.Book;
 import com.library.services.SystemController;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.LibWindow;
@@ -9,10 +10,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
+import java.util.List;
 
 
 public class AllBookIdsWindow extends JFrame implements LibWindow {
-    private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 6696979618083051462L;
     public static final AllBookIdsWindow INSTANCE = new AllBookIdsWindow();
     ControllerInterface ci = new SystemController();
     private boolean isInitialized = false;
@@ -23,10 +27,8 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
     private JPanel lowerPanel;
     private TextArea textArea;
 
-
-    //Singleton class
-    private AllBookIdsWindow() {
-    }
+    // Singleton class
+    private AllBookIdsWindow() {}
 
     public void init() {
         mainPanel = new JPanel();
@@ -43,7 +45,7 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 
     public void defineTopPanel() {
         topPanel = new JPanel();
-        JLabel AllIDsLabel = new JLabel("All Book IDs");
+        JLabel AllIDsLabel = new JLabel("All Book IDs and Titles");
         Util.adjustLabelFont(AllIDsLabel, Util.DARK_BLUE, true);
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         topPanel.add(AllIDsLabel);
@@ -51,46 +53,44 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 
     public void defineMiddlePanel() {
         middlePanel = new JPanel();
-        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
+        FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 50, 50);
         middlePanel.setLayout(fl);
-        textArea = new TextArea(8, 20);
-        //populateTextArea();
+        textArea = new TextArea(8, 50);
         middlePanel.add(textArea);
-
     }
 
     public void defineLowerPanel() {
-
         JButton backToMainButn = new JButton("<= Back to Main");
         backToMainButn.addActionListener(new BackToMainListener());
         lowerPanel = new JPanel();
         lowerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        ;
         lowerPanel.add(backToMainButn);
     }
 
-    class BackToMainListener implements ActionListener {
+    static class BackToMainListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             LibrarySystem.hideAllWindows();
             LibrarySystem.INSTANCE.setVisible(true);
-
         }
     }
 
-    public void setData(String data) {
-        textArea.setText(data);
+    // Method to set book data in the TextArea
+    public void setData(List<Book> books) {
+        StringBuilder data = new StringBuilder();
+        for (Book book : books) {
+            data.append(book.getIsbn()).append(": ").append(book.getTitle()).append("\n");
+        }
+        textArea.setText(data.toString());
     }
 
     @Override
     public boolean isInitialized() {
-        // TODO Auto-generated method stub
         return isInitialized;
     }
 
     @Override
     public void isInitialized(boolean val) {
         isInitialized = val;
-
     }
 }

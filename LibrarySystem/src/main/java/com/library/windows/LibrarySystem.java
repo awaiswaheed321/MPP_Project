@@ -1,6 +1,7 @@
 package com.library.windows;
 
 import com.library.Main;
+import com.library.classes.Book;
 import com.library.services.SystemController;
 import com.library.enums.Auth;
 import com.library.interfaces.ControllerInterface;
@@ -15,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -152,17 +154,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
             AllBookIdsWindow.INSTANCE.init();
-
-            List<String> ids = ci.allBookIds();
-            Collections.sort(ids);
-            StringBuilder sb = new StringBuilder();
-            for (String s : ids) {
-                sb.append(s).append("\n");
-            }
-            System.out.println(sb.toString());
-            AllBookIdsWindow.INSTANCE.setData(sb.toString());
+            List<Book> books = ci.getAllBooks();
+            books.sort(Comparator.comparing(Book::getIsbn));
+            AllBookIdsWindow.INSTANCE.setData(books);
             AllBookIdsWindow.INSTANCE.pack();
-            //AllBookIdsWindow.INSTANCE.setSize(660,500);
             Util.centerFrameOnDesktop(AllBookIdsWindow.INSTANCE);
             AllBookIdsWindow.INSTANCE.setVisible(true);
         }
@@ -196,7 +191,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     class AddBookCopyListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();

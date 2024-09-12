@@ -8,18 +8,18 @@ import com.library.exceptions.LoginException;
 import java.util.List;
 
 public interface ControllerInterface {
-    public void login(String id, String password) throws LoginException;
+    void login(String id, String password) throws LoginException;
 
-    public List<String> allMemberIds();
+    List<String> allMemberIds();
 
-    public List<String> allBookIds();
+    List<Book> getAllBooks();
 
-    public boolean isValidMember(String memberId);
+    boolean isValidMember(String memberId);
 
-    public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException;
+    CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException;
 
-    public List<Book> allBooks();
+    List<Book> allBooks();
 
-    public void saveBook(Book book);
+    void saveBook(Book book);
 
 }

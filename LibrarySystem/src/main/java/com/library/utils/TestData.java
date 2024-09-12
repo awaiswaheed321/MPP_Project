@@ -91,10 +91,18 @@ public class TestData {
     @SuppressWarnings("serial")
     List<Book> allBooks = new ArrayList<Book>() {
         {
-            add(new Book("23-11451", "The Big Fish", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
-            add(new Book("28-12331", "Antartica", 7, Arrays.asList(allAuthors.get(2))));
-            add(new Book("99-22223", "Thinking Java", 21, Arrays.asList(allAuthors.get(3))));
-            add(new Book("48-56882", "Jimmy's First Day of School", 7, Arrays.asList(allAuthors.get(4))));
+            add(new Book("23-11451", "The Great Escape", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
+            add(new Book("28-12331", "Journey to the Ice", 7, Arrays.asList(allAuthors.get(2))));
+            add(new Book("99-22223", "Java for Experts", 21, Arrays.asList(allAuthors.get(3))));
+            add(new Book("48-56882", "First Day Adventures", 7, Arrays.asList(allAuthors.get(4))));
+            add(new Book("23-11452", "The Ocean's Secret", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
+            add(new Book("28-12333", "Frozen Expeditions", 7, Arrays.asList(allAuthors.get(2))));
+            add(new Book("99-22226", "Java Mastery", 21, Arrays.asList(allAuthors.get(3))));
+            add(new Book("48-56888", "School Chronicles", 7, Arrays.asList(allAuthors.get(4))));
+            add(new Book("23-11478", "Mysteries of the Deep", 21, Arrays.asList(allAuthors.get(0), allAuthors.get(1))));
+            add(new Book("28-12334", "The Antarctic Trek", 7, Arrays.asList(allAuthors.get(2))));
+            add(new Book("99-22245", "Java Unleashed", 21, Arrays.asList(allAuthors.get(3))));
+            add(new Book("48-56892", "Adventures in School", 7, Arrays.asList(allAuthors.get(4))));
         }
     };
 

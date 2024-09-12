@@ -37,8 +37,8 @@ public class SystemController implements ControllerInterface {
     }
 
     @Override
-    public List<String> allBookIds() {
-        return new ArrayList<>(da.readBooksMap().keySet());
+    public List<Book> getAllBooks() {
+        return new ArrayList<>(da.readBooksMap().values());
     }
 
     @Override

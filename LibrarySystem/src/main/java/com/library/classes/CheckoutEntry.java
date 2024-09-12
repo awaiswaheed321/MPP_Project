@@ -1,16 +1,14 @@
 package com.library.classes;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class CheckoutEntry implements Serializable {
-    @Serial
-    private static final long serialVersionUID = -6050615539255649506L;
-    private final LibraryMember member;
-    private final BookCopy bookCopy;
-    private final LocalDate checkOutDate;
-    private final LocalDate dueDate;
+    private static final long serialVersionUID = -1887001394016169960L;
+    private LibraryMember member;
+    private BookCopy bookCopy;
+    private LocalDate checkOutDate;
+    private LocalDate dueDate;
 
     public CheckoutEntry(LibraryMember member, BookCopy bookCopy, LocalDate checkOutDate, LocalDate dueDate) {
         super();

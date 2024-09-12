@@ -10,6 +10,7 @@ import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 
 
 @SuppressWarnings("serial")
@@ -43,18 +44,12 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
 
         memberIdTextField = new TextField(20);
 
-        //TODO: remove after testing
-        //memberIdTextField.setText("1001");
-
         middlePanel.add(memberIdTextField);
 
         isbnLabel = new Label("ISBN:");
         middlePanel.add(isbnLabel);
 
         isbnTextField = new TextField(20);
-
-        //TODO: remove after testing
-        //isbnTextField.setText("23-11451");
 
         middlePanel.add(isbnTextField);
 
@@ -82,7 +77,7 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
 
     private void showCheckoutEntry(CheckoutEntry entry) {
         LibrarySystem.hideAllWindows();
-        CheckoutRecordWindow.INSTANCE.setCheckoutEntry(entry);
+        CheckoutRecordWindow.INSTANCE.setCheckoutEntries(Collections.singletonList(entry));
         CheckoutRecordWindow.INSTANCE.init();
         CheckoutRecordWindow.INSTANCE.pack();
         CheckoutRecordWindow.INSTANCE.setVisible(true);

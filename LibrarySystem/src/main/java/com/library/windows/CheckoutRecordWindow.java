@@ -2,27 +2,26 @@ package com.library.windows;
 
 import com.library.classes.Book;
 import com.library.classes.CheckoutEntry;
-import com.library.services.SystemController;
-import com.library.interfaces.ControllerInterface;
 import com.library.utils.Util;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @SuppressWarnings("serial")
 public class CheckoutRecordWindow extends LibrarySystemWindow {
     public static final CheckoutRecordWindow INSTANCE = new CheckoutRecordWindow();
-    ControllerInterface ci = new SystemController();
 
-    private CheckoutEntry checkoutEntry;
+    private List<CheckoutEntry> checkoutEntries;
 
     private CheckoutRecordWindow() {
     }
 
-    public void setCheckoutEntry(CheckoutEntry checkoutEntry) {
-        this.checkoutEntry = checkoutEntry;
+    public void setCheckoutEntries(List<CheckoutEntry> checkoutEntries) {
+        this.checkoutEntries = checkoutEntries;
     }
 
     public void defineTopPanel() {
@@ -53,25 +52,31 @@ public class CheckoutRecordWindow extends LibrarySystemWindow {
         JPanel memberInfoPanel = new JPanel();
         memberInfoPanel.setLayout(new BoxLayout(memberInfoPanel, BoxLayout.Y_AXIS));
 
-        JLabel memberIdLabel = new JLabel("Member ID: " + checkoutEntry.getMember().getMemberId());
+        JLabel memberIdLabel = new JLabel("Member ID: " + checkoutEntries.get(0).getMember().getMemberId());
         memberInfoPanel.add(memberIdLabel);
-        JLabel memberNameLabel = new JLabel("Member name: " + checkoutEntry.getMember().getFullName());
+        JLabel memberNameLabel = new JLabel("Member name: " + checkoutEntries.get(0).getMember().getFullName());
         memberInfoPanel.add(memberNameLabel);
 
         middlePanel.add(memberInfoPanel, BorderLayout.NORTH);
     }
 
     private DefaultTableModel getCheckoutModel() {
-        Book book = checkoutEntry.getBookCopy().getBook();
-        String[] columnNames = {"ISBN", "Title", "Copy No", "Due Date"};
-        String[][] checkoutData = new String[1][3];
-        checkoutData[0] = new String[]{
-                book.getIsbn(),
-                book.getTitle(),
-                String.valueOf(checkoutEntry.getBookCopy().getCopyNum()),
-                checkoutEntry.getDueDate().toString()
-        };
+        String[] columnNames = {"ISBN", "Title", "Copy No", "Checkout Date", "Due Date"};
+        String[][] checkoutData = new String[checkoutEntries.size()][5];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        for (int i = 0; i < checkoutEntries.size(); i++) {
+            CheckoutEntry entry = checkoutEntries.get(i);
+            Book book = entry.getBookCopy().getBook();
+            checkoutData[i] = new String[]{
+                    book.getIsbn(),
+                    book.getTitle(),
+                    String.valueOf(entry.getBookCopy().getCopyNum()),
+                    entry.getCheckOutDate().format(formatter), // Format checkout date
+                    entry.getDueDate().format(formatter)       // Format due date
+            };
+        }
         return new DefaultTableModel(checkoutData, columnNames) {
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }

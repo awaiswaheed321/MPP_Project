@@ -3,10 +3,10 @@ package com.library.windows;
 import com.library.Main;
 import com.library.classes.Author;
 import com.library.classes.Book;
-import com.library.services.SystemController;
 import com.library.enums.Auth;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.LibWindow;
+import com.library.services.SystemController;
 import com.library.utils.DataUtils;
 import com.library.utils.Util;
 
@@ -221,7 +221,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     class AddMemberListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
@@ -230,31 +229,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
             AddMemberWindow.INSTANCE.setSize(670, 400);
             AddMemberWindow.INSTANCE.setVisible(true);
             Main.centerFrameOnDesktop(AddMemberWindow.INSTANCE);
-
-
-//            LibrarySystem.hideAllWindows();
-//            AllBookIdsWindow.INSTANCE.init();
-
-//            List<String> ids = ci.allMemberIds();
-//            Collections.sort(ids);
-//            StringBuilder sb = new StringBuilder();
-//            for (String s : ids) {
-//                sb.append(s + "\n");
-//            }
-//            System.out.println(sb.toString());
-//            AllMemberIdsWindow.INSTANCE.setData(sb.toString());
-//            AllMemberIdsWindow.INSTANCE.pack();
-//            //AllMemberIdsWindow.INSTANCE.setSize(660,500);
-//            Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
-//            AllMemberIdsWindow.INSTANCE.setVisible(true);
-
-
         }
-
     }
 
     class CheckoutBookListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();

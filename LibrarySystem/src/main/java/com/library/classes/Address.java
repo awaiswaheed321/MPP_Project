@@ -6,14 +6,13 @@ import java.util.UUID;
 
 /* Immutable */
 final public class Address implements Serializable {
-
     @Serial
     private static final long serialVersionUID = -891229800414574888L;
-    private String street;
-    private String city;
-    private String state;
-    private String zip;
-    private String id;
+    private final String street;
+    private final String city;
+    private final String state;
+    private final String zip;
+    private final String id;
 
     public Address(String street, String city, String state, String zip) {
         this.street = street;

@@ -2,16 +2,17 @@ package com.library.classes;
 
 import com.library.enums.Auth;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 final public class User implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 5147265048973262104L;
 
-    private String id;
+    private final String id;
 
-    private String password;
-    private Auth authorization;
+    private final String password;
+    private final Auth authorization;
 
     public User(String id, String pass, Auth auth) {
         this.id = id;

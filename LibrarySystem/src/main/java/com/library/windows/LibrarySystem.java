@@ -173,7 +173,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
             List<Author> authors = ci.getAllAuthors();
-            authors.sort(Comparator.comparing(Author::getLastName));
             AllAuthorsWindow.INSTANCE.setData(authors);
             AllAuthorsWindow.INSTANCE.init();
             AllAuthorsWindow.INSTANCE.pack();

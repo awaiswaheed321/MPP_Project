@@ -35,7 +35,7 @@ public class LoginWindow extends LibrarySystemWindow {
         defineUpperHalf();
         defineMiddleHalf();
         defineLowerHalf();
-
+        setPreferredSize(new Dimension(500, 400));
         // Use GridBagLayout for centering everything
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();

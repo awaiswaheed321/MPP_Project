@@ -143,7 +143,6 @@ public class AddAuthorWindow extends LibrarySystemWindow {
             dispose();
             AllAuthorsWindow.INSTANCE.init();
             List<Author> authors = ci.getAllAuthors();
-            authors.sort(Comparator.comparing(Author::getLastName));
             AllAuthorsWindow.INSTANCE.setData(authors);
             AllAuthorsWindow.INSTANCE.pack();
             Util.centerFrameOnDesktop(AllAuthorsWindow.INSTANCE);

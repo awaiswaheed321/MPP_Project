@@ -8,9 +8,7 @@ import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.DataAccess;
 import com.library.utils.PasswordUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SystemController implements ControllerInterface {
     public static Auth currentAuth = null;
@@ -57,7 +55,15 @@ public class SystemController implements ControllerInterface {
 
     @Override
     public List<Author> getAllAuthors() {
-        return new ArrayList<>(da.readAuthorMap().values());
+        List<Author> authors = new ArrayList<>(da.readAuthorMap().values());
+        authors.sort((a1, a2) -> {
+            int firstNameComparison = a1.getFirstName().compareToIgnoreCase(a2.getFirstName());
+            if (firstNameComparison != 0) {
+                return firstNameComparison;
+            }
+            return a1.getLastName().compareToIgnoreCase(a2.getLastName());
+        });
+        return authors;
     }
 
     @Override

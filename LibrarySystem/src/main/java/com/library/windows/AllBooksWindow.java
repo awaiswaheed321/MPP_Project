@@ -105,15 +105,16 @@ public class AllBooksWindow extends JFrame implements LibWindow {
 
     // Method to create a Table Model for the book data
     private DefaultTableModel getBookTableModel() {
-        String[] columnNames = {"ISBN", "Title", "Number of Copies", "Max Checkout Length"};
-        String[][] bookData = new String[booksList.size()][4];
+        String[] columnNames = {"ISBN", "Title", "Total Copies", "Available Copies", "Max Checkout Length"};
+        String[][] bookData = new String[booksList.size()][5];
 
         for (int i = 0; i < booksList.size(); i++) {
             Book book = booksList.get(i);
             bookData[i] = new String[]{
                     book.getIsbn(),                               // ISBN
                     book.getTitle(),                              // Title
-                    String.valueOf(book.getCopies().size()),      // Number of Copies
+                    String.valueOf(book.getCopies().size()),      // Total Copies
+                    String.valueOf(book.getNumberOfAvailableCopies()), // Available Copies
                     String.valueOf(book.getMaxCheckoutLength())   // Max Checkout Length
             };
         }

@@ -93,6 +93,12 @@ final public class Book implements Serializable {
         return optional.orElse(null);
     }
 
+    public long getNumberOfAvailableCopies() {
+        return copies.stream()
+                .filter(BookCopy::isAvailable)
+                .count();
+    }
+
     public BookCopy getCopy(int copyNum) {
         for (BookCopy c : copies) {
             if (copyNum == c.getCopyNum()) {

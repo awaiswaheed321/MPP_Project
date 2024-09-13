@@ -67,27 +67,7 @@ public class ValidationService {
         if (memberId == null || memberId.trim().isEmpty()) {
             errors.add("Member ID is required.");
         }
-        if (firstName == null || firstName.trim().isEmpty()) {
-            errors.add("First Name is required.");
-        }
-        if (lastName == null || lastName.trim().isEmpty()) {
-            errors.add("Last Name is required.");
-        }
-        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
-            errors.add("Phone Number is required.");
-        }
-        if (street == null || street.trim().isEmpty()) {
-            errors.add("Street is required.");
-        }
-        if (city == null || city.trim().isEmpty()) {
-            errors.add("City is required.");
-        }
-        if (state == null || state.trim().isEmpty()) {
-            errors.add("State is required.");
-        }
-        if (zip == null || zip.trim().isEmpty()) {
-            errors.add("Zip Code is required.");
-        }
+        validateUserInfo(firstName, lastName, phoneNumber, street, city, state, zip, errors);
 
         // Check if the member ID already exists
         if (sc.isValidMember(memberId)) {
@@ -111,6 +91,62 @@ public class ValidationService {
 
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
+        }
+    }
+
+    public static void validateAuthor(String firstName, String lastName, String telephone,
+                                      String street, String city, String state,
+                                      String zip, String bio) throws ValidationException {
+        List<String> errors = new ArrayList<>();
+
+        // Check if any fields are empty
+        validateUserInfo(firstName, lastName, telephone, street, city, state, zip, errors);
+        if (bio == null || bio.trim().isEmpty()) {
+            errors.add("Biography is required.");
+        }
+
+        // Validate phone number (e.g., 10 digits)
+        if (telephone != null && !telephone.matches("\\d{10}")) {
+            errors.add("Invalid Phone Number. Please enter a 10-digit number.");
+        }
+
+        // Validate zip code format (5 digits for US zip code)
+        if (zip != null && !zip.matches("\\d{5}")) {
+            errors.add("Invalid Zip Code. Please enter a 5-digit zip code.");
+        }
+
+        // Validate state (assuming 2-letter code)
+        if (state != null && (!state.matches("[A-Z]{2}") || !validStates.contains(state))) {
+            errors.add("Invalid State. Please enter a 2-letter state code.");
+        }
+
+        // Throw validation exception if there are errors
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
+    }
+
+    private static void validateUserInfo(String firstName, String lastName, String telephone, String street, String city, String state, String zip, List<String> errors) {
+        if (firstName == null || firstName.trim().isEmpty()) {
+            errors.add("First Name is required.");
+        }
+        if (lastName == null || lastName.trim().isEmpty()) {
+            errors.add("Last Name is required.");
+        }
+        if (telephone == null || telephone.trim().isEmpty()) {
+            errors.add("Phone Number is required.");
+        }
+        if (street == null || street.trim().isEmpty()) {
+            errors.add("Street is required.");
+        }
+        if (city == null || city.trim().isEmpty()) {
+            errors.add("City is required.");
+        }
+        if (state == null || state.trim().isEmpty()) {
+            errors.add("State is required.");
+        }
+        if (zip == null || zip.trim().isEmpty()) {
+            errors.add("Zip Code is required.");
         }
     }
 }

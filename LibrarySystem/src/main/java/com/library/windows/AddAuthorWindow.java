@@ -2,10 +2,12 @@ package com.library.windows;
 
 import com.library.classes.Address;
 import com.library.classes.Author;
+import com.library.exceptions.ValidationException;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.DataAccess;
 import com.library.services.DataAccessFacade;
 import com.library.services.SystemController;
+import com.library.services.ValidationService;
 import com.library.utils.Util;
 
 import javax.swing.*;
@@ -128,6 +130,8 @@ public class AddAuthorWindow extends LibrarySystemWindow {
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();
+
+            // Collect input field data
             String firstName = firstNameField.getText();
             String lastName = lastNameField.getText();
             String telephone = telephoneField.getText();
@@ -136,19 +140,37 @@ public class AddAuthorWindow extends LibrarySystemWindow {
             String state = stateField.getText();
             String zip = zipField.getText();
             String bio = bioField.getText();
-            Address addr = new Address(street, city, state, zip);
-            Author newAuthor = new Author(firstName, lastName, telephone, addr, bio);
-            da.saveNewAuthor(newAuthor);
-            clearInputs();
-            dispose();
-            AllAuthorsWindow.INSTANCE.init();
-            List<Author> authors = ci.getAllAuthors();
-            AllAuthorsWindow.INSTANCE.setData(authors);
-            AllAuthorsWindow.INSTANCE.pack();
-            Util.centerFrameOnDesktop(AllAuthorsWindow.INSTANCE);
-            AllAuthorsWindow.INSTANCE.setVisible(true);
+
+            try {
+                // Call the validation method to check for errors
+                ValidationService.validateAuthor(firstName, lastName, telephone, street, city, state, zip, bio);
+
+                // Proceed with creating Author and saving to database if validation passes
+                Address addr = new Address(street, city, state, zip);
+                Author newAuthor = new Author(firstName, lastName, telephone, addr, bio);
+                da.saveNewAuthor(newAuthor);
+
+                // Clear input fields
+                clearInputs();
+                dispose();
+
+                // Update the All Authors window
+                AllAuthorsWindow.INSTANCE.init();
+                List<Author> authors = ci.getAllAuthors();
+                AllAuthorsWindow.INSTANCE.setData(authors);
+                AllAuthorsWindow.INSTANCE.pack();
+                Util.centerFrameOnDesktop(AllAuthorsWindow.INSTANCE);
+                AllAuthorsWindow.INSTANCE.setVisible(true);
+
+            } catch (ValidationException ve) {
+                // Display validation errors to the user
+                JOptionPane.showMessageDialog(null, String.join("\n", ve.getErrors()),
+                        "Validation Error", JOptionPane.ERROR_MESSAGE);
+                setVisible(true);
+            }
         }
     }
+
 
     private class CancelButtonListener implements ActionListener {
         @Override

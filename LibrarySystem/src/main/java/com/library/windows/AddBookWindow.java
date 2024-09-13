@@ -208,8 +208,7 @@ public class AddBookWindow extends LibrarySystemWindow {
                 clearFields();
                 JOptionPane.showMessageDialog(null, "Book added successfully!");
                 LibrarySystem.hideAllWindows();
-                LibrarySystem.INSTANCE.setVisible(true);
-
+                AddBookWindow.INSTANCE.setVisible(true);
             } catch (ValidationException ve) {
                 // Display validation errors
                 JOptionPane.showMessageDialog(null, String.join("\n", ve.getErrors()), "Validation Errors", JOptionPane.ERROR_MESSAGE);

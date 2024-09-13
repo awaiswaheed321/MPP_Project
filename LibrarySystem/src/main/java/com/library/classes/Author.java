@@ -12,10 +12,10 @@ final public class Author extends Person implements Serializable {
         return bio;
     }
 
-    public Author(String firstName, String lastName, String telephone, Address a, String bio) {
+    public Author(String firstName, String lastName, String telephone, Address a, String bio, String authorId) {
         super(firstName, lastName, telephone, a);
         this.bio = bio;
-        this.authorId = UUID.randomUUID().toString();
+        this.authorId = authorId;
     }
 
     public String getAuthorId() {

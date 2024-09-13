@@ -1,13 +1,15 @@
 package com.library.services;
 
-import com.library.classes.*;
+import com.library.classes.Author;
+import com.library.classes.Book;
+import com.library.classes.LibraryMember;
+import com.library.classes.User;
 import com.library.interfaces.DataAccess;
 import com.library.utils.DataUtils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,13 +33,10 @@ public class DataAccessFacade implements DataAccess {
     }
 
     enum StorageType {
-        BOOKS, MEMBERS, USERS, AUTHORS, ADDRESSES;
+        BOOKS, MEMBERS, USERS, AUTHORS;
     }
 
-
     public static final String OUTPUT_DIR = DataUtils.buildPath(System.getProperty("user.dir"), "LibrarySystem", "src", "main", "resources", "storage");
-
-    public static final String DATE_PATTERN = "MM/dd/yyyy";
 
     public void saveNewMember(LibraryMember member) {
         HashMap<String, LibraryMember> mems = readMemberMap();
@@ -71,11 +70,6 @@ public class DataAccessFacade implements DataAccess {
     @SuppressWarnings("unchecked")
     public HashMap<String, Author> readAuthorMap() {
         return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
-    }
-
-    @SuppressWarnings("unchecked")
-    public HashMap<String, Address> readAddressMap() {
-        return (HashMap<String, Address>) readFromStorage(StorageType.ADDRESSES);
     }
 
     public static void saveBooksData(List<Book> bookList) {

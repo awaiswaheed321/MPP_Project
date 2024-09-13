@@ -8,6 +8,7 @@ import com.library.interfaces.DataAccess;
 import com.library.services.DataAccessFacade;
 import com.library.services.SystemController;
 import com.library.services.ValidationService;
+import com.library.utils.IDGeneratorUtil;
 import com.library.utils.Util;
 
 import javax.swing.*;
@@ -128,7 +129,7 @@ public class AddAuthorWindow extends LibrarySystemWindow {
     private class SubmitButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            LibrarySystem.hideAllWindows();
+//            LibrarySystem.hideAllWindows();
 
             // Collect input field data
             String firstName = firstNameField.getText();
@@ -146,7 +147,7 @@ public class AddAuthorWindow extends LibrarySystemWindow {
 
                 // Proceed with creating Author and saving to database if validation passes
                 Address addr = new Address(street, city, state, zip);
-                Author newAuthor = new Author(firstName, lastName, telephone, addr, bio);
+                Author newAuthor = new Author(firstName, lastName, telephone, addr, bio, IDGeneratorUtil.getNextAuthorId());
                 da.saveNewAuthor(newAuthor);
 
                 // Clear input fields
@@ -165,7 +166,7 @@ public class AddAuthorWindow extends LibrarySystemWindow {
                 // Display validation errors to the user
                 JOptionPane.showMessageDialog(null, String.join("\n", ve.getErrors()),
                         "Validation Error", JOptionPane.ERROR_MESSAGE);
-                setVisible(true);
+//                AddAuthorWindow.INSTANCE.setVisible(true);
             }
         }
     }
@@ -175,7 +176,8 @@ public class AddAuthorWindow extends LibrarySystemWindow {
         @Override
         public void actionPerformed(ActionEvent e) {
             clearInputs();
-            dispose(); // Close the window without making changes
+            dispose();
+            AllAuthorsWindow.INSTANCE.setVisible(true);
         }
     }
 

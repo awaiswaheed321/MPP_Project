@@ -96,6 +96,7 @@ public class AllAuthorsWindow extends LibrarySystemWindow {
     private static class AddAuthorListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            LibrarySystem.hideAllWindows();
             AddAuthorWindow.INSTANCE.init();
             Util.centerFrameOnDesktop(AddAuthorWindow.INSTANCE);
             AddAuthorWindow.INSTANCE.setVisible(true);

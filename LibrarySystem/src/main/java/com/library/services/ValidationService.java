@@ -1,11 +1,14 @@
 package com.library.services;
 
 import com.library.classes.Author;
+import com.library.classes.Book;
 import com.library.exceptions.ValidationException;
+import com.library.interfaces.DataAccess;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ValidationService {
 
@@ -23,6 +26,8 @@ public class ValidationService {
             errors.add("ISBN cannot be empty.");
         } else if(!isbn.matches("\\d{2}-\\d{4}")) {
             errors.add("Invalid ISBN format. Please enter in the format 12-1234.");
+        } else if(isbnExists(isbn)) {
+            errors.add("ISBN already exists.");
         }
         if (title == null || title.trim().isEmpty()) {
             errors.add("Title cannot be empty.");
@@ -46,10 +51,15 @@ public class ValidationService {
         }
     }
 
+    private static boolean isbnExists(String isbn) {
+        DataAccess da = new DataAccessFacade();
+        Map<String, Book> bookMap = da.readBooksMap();
+        return bookMap.containsKey(isbn);
+    }
+
     public static void validateMember(String firstName, String lastName,
                                       String phoneNumber, String street, String city,
                                       String state, String zip) throws ValidationException {
-        SystemController sc = new SystemController();
         List<String> errors = new ArrayList<>();
         validateUserInfo(firstName, lastName, phoneNumber, street, city, state, zip, errors);
         if (phoneNumber != null && !phoneNumber.matches("\\d{10}")) {

@@ -1,9 +1,6 @@
 package com.library.services;
 
-import com.library.classes.Author;
-import com.library.classes.Book;
-import com.library.classes.CheckoutEntry;
-import com.library.classes.User;
+import com.library.classes.*;
 import com.library.enums.Auth;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
@@ -30,11 +27,6 @@ public class SystemController implements ControllerInterface {
             throw new LoginException("Password incorrect");
         }
         currentAuth = map.get(id).getAuthorization();
-    }
-
-    @Override
-    public List<String> allMemberIds() {
-        return new ArrayList<>(da.readMemberMap().keySet());
     }
 
     @Override
@@ -74,6 +66,19 @@ public class SystemController implements ControllerInterface {
     @Override
     public void saveNewBook(Book book) {
         da.saveNewBook(book);
+    }
+
+    @Override
+    public List<LibraryMember> getAllMembers() {
+        List<LibraryMember> libraryMembers = new ArrayList<>(da.readMemberMap().values());
+        libraryMembers.sort((a1, a2) -> {
+            int firstNameComparison = a1.getFirstName().compareToIgnoreCase(a2.getFirstName());
+            if (firstNameComparison != 0) {
+                return firstNameComparison;
+            }
+            return a1.getLastName().compareToIgnoreCase(a2.getLastName());
+        });
+        return libraryMembers;
     }
 
     @Override

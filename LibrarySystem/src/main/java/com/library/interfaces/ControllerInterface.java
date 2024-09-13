@@ -3,6 +3,7 @@ package com.library.interfaces;
 import com.library.classes.Author;
 import com.library.classes.Book;
 import com.library.classes.CheckoutEntry;
+import com.library.classes.LibraryMember;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
 
@@ -10,8 +11,6 @@ import java.util.List;
 
 public interface ControllerInterface {
     void login(String id, String password) throws LoginException;
-
-    List<String> allMemberIds();
 
     List<Book> getAllBooks();
 
@@ -26,4 +25,6 @@ public interface ControllerInterface {
     List<Author> getAllAuthors();
 
     void saveNewBook(Book book);
+
+    List<LibraryMember> getAllMembers();
 }

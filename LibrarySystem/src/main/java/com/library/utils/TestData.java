@@ -25,9 +25,6 @@ public class TestData {
         td.libraryMemberData();
         td.userData();
         td.addAuthors();
-        DataAccess da = new DataAccessFacade();
-        System.out.println(da.readBooksMap());
-        System.out.println(da.readUserMap());
     }
 
     private void addAuthors() {
@@ -51,15 +48,15 @@ public class TestData {
 
     //create library members
     public void libraryMemberData() {
-        LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "641-223-2211", addresses.get(4));
+        LibraryMember libraryMember = new LibraryMember("1001", "Andy", "Rogers", "6412232211", addresses.get(4));
         members.add(libraryMember);
-        libraryMember = new LibraryMember("1002", "Drew", "Stevens", "702-998-2414", addresses.get(5));
-        members.add(libraryMember);
-
-        libraryMember = new LibraryMember("1003", "Sarah", "Eagleton", "451-234-8811", addresses.get(6));
+        libraryMember = new LibraryMember("1002", "Drew", "Stevens", "7029982414", addresses.get(5));
         members.add(libraryMember);
 
-        libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn", "641-472-2871", addresses.get(7));
+        libraryMember = new LibraryMember("1003", "Sarah", "Eagleton", "4512348811", addresses.get(6));
+        members.add(libraryMember);
+
+        libraryMember = new LibraryMember("1004", "Ricardo", "Montalbahn", "6414722871", addresses.get(7));
         members.add(libraryMember);
 
         DataAccessFacade.saveMembersData(members);
@@ -84,11 +81,11 @@ public class TestData {
 
     public List<Author> allAuthors = new ArrayList<Author>() {
         {
-            add(new Author("Joe", "Thomas", "641-445-2123", addresses.get(0), "A happy man is he.", "2001"));
-            add(new Author("Sandra", "Thomas", "641-445-2123", addresses.get(0), "A happy wife is she.", "2002"));
-            add(new Author("Nirmal", "Pugh", "641-919-3223", addresses.get(1), "Thinker of thoughts.", "2003"));
-            add(new Author("Andrew", "Cleveland", "976-445-2232", addresses.get(2), "Author of children' books.", "2004"));
-            add(new Author("Sarah", "Connor", "123-422-2663", addresses.get(3), "Known for her clever style.", "2005"));
+            add(new Author("Joe", "Thomas", "6414452123", addresses.get(0), "A happy man is he.", "2001"));
+            add(new Author("Sandra", "Thomas", "6414452123", addresses.get(0), "A happy wife is she.", "2002"));
+            add(new Author("Nirmal", "Pugh", "6419193223", addresses.get(1), "Thinker of thoughts.", "2003"));
+            add(new Author("Andrew", "Cleveland", "9764452232", addresses.get(2), "Author of children' books.", "2004"));
+            add(new Author("Sarah", "Connor", "1234222663", addresses.get(3), "Known for her clever style.", "2005"));
         }
     };
 

@@ -46,19 +46,12 @@ public class ValidationService {
         }
     }
 
-    public static void validateMember(String memberId, String firstName, String lastName,
+    public static void validateMember(String firstName, String lastName,
                                       String phoneNumber, String street, String city,
                                       String state, String zip) throws ValidationException {
         SystemController sc = new SystemController();
         List<String> errors = new ArrayList<>();
-        if (memberId == null || memberId.trim().isEmpty()) {
-            errors.add("Member ID is required.");
-        }
         validateUserInfo(firstName, lastName, phoneNumber, street, city, state, zip, errors);
-
-        if (sc.isValidMember(memberId)) {
-            errors.add("The Member ID already exists.");
-        }
         if (phoneNumber != null && !phoneNumber.matches("\\d{10}")) {
             errors.add("Invalid Phone Number. Please enter a 10-digit number.");
         }

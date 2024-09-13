@@ -141,11 +141,9 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
                         JOptionPane.showMessageDialog(this, "No Checkout Records Exits");
                         return;
                     }
-                    for (CheckoutEntry ce : lmCheckout) {
-                        System.out.println(ce.toString());
-                    }
                     LibrarySystem.hideAllWindows();
-                    CheckoutRecordWindow.INSTANCE.setCheckoutEntries(lmCheckout);
+                    CheckoutRecordWindow.INSTANCE.addCheckoutEntry(lmCheckout.get(0));
+                    CheckoutRecordWindow.INSTANCE.updateMemberInfoView();
                     CheckoutRecordWindow.INSTANCE.init();
                     CheckoutRecordWindow.INSTANCE.pack();
                     CheckoutRecordWindow.INSTANCE.setVisible(true);

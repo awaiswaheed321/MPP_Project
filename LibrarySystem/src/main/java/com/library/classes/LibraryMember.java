@@ -1,12 +1,17 @@
 package com.library.classes;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 final public class LibraryMember extends Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -2226197306790714013L;
+
     private final String memberId;
-    private List<CheckoutEntry> checkouts;
+
+    private final List<CheckoutEntry> checkouts;
 
     public LibraryMember(String memberId, String fname, String lname, String tel, Address add) {
         super(fname, lname, tel, add);
@@ -14,8 +19,16 @@ final public class LibraryMember extends Person implements Serializable {
         this.checkouts = new ArrayList<>();
     }
 
+    public void addCheckout(CheckoutEntry checkout) {
+        checkouts.add(checkout);
+    }
+
     public String getMemberId() {
         return memberId;
+    }
+
+    public List<CheckoutEntry> getCheckouts() {
+        return checkouts;
     }
 
     @Override
@@ -23,17 +36,4 @@ final public class LibraryMember extends Person implements Serializable {
         return "Member Info: " + "ID: " + memberId + ", name: " + getFirstName() + " " + getLastName() +
                 ", " + getTelephone() + " " + getAddress();
     }
-
-    public List<CheckoutEntry> getCheckouts() {
-        return checkouts;
-    }
-
-    public void addCheckout(CheckoutEntry checkout) {
-        if (checkouts == null) {
-            checkouts = new ArrayList<>();
-        }
-        checkouts.add(checkout);
-    }
-
-    private static final long serialVersionUID = -2226197306790714013L;
 }

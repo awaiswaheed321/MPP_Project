@@ -8,20 +8,21 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 
-@SuppressWarnings("serial")
 public class CheckoutRecordWindow extends LibrarySystemWindow {
     public static final CheckoutRecordWindow INSTANCE = new CheckoutRecordWindow();
 
     private List<CheckoutEntry> checkoutEntries;
 
     private CheckoutRecordWindow() {
+        checkoutEntries = new ArrayList<>();
     }
 
-    public void setCheckoutEntries(List<CheckoutEntry> checkoutEntries) {
-        this.checkoutEntries = checkoutEntries;
+    public void addCheckoutEntry(CheckoutEntry e) {
+        checkoutEntries = e.getMember().getCheckouts();
     }
 
     public void defineTopPanel() {
@@ -35,17 +36,25 @@ public class CheckoutRecordWindow extends LibrarySystemWindow {
     public void defineMiddlePanel() {
         middlePanel = new JPanel();
         middlePanel.setLayout(new BorderLayout());
-
         showMemberInfo();
+        showTable();
+    }
 
+    private void showTable() {
         JTable jtable = new JTable();
         jtable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jtable.setFillsViewportHeight(true);
         DefaultTableModel tableModel = getCheckoutModel();
         jtable.setModel(tableModel);
         jtable.repaint();
-
         middlePanel.add(new JScrollPane(jtable), BorderLayout.CENTER);
+    }
+
+    public void updateMemberInfoView() {
+        if (!isInitialized) return;
+        middlePanel.removeAll();
+        showMemberInfo();
+        showTable();
     }
 
     private void showMemberInfo() {

@@ -1,6 +1,7 @@
 package com.library.windows;
 
 import com.library.classes.CheckoutEntry;
+import com.library.exceptions.LibrarySystemException;
 import com.library.services.SystemController;
 import com.library.exceptions.BookCopyNotAvailableException;
 import com.library.exceptions.BookNotFoundException;
@@ -10,6 +11,7 @@ import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Collections;
 
 
@@ -17,11 +19,8 @@ import java.util.Collections;
 public class CheckoutBookWindow extends LibrarySystemWindow {
     public static final CheckoutBookWindow INSTANCE = new CheckoutBookWindow();
     ControllerInterface ci = new SystemController();
-    private Label memberIdLabel;
     private TextField memberIdTextField;
-    private Label isbnLabel;
     private TextField isbnTextField;
-    private Button checkoutButton;
 
     private CheckoutBookWindow() {
     }
@@ -39,21 +38,21 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
         FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
         middlePanel.setLayout(fl);
 
-        memberIdLabel = new Label("Member ID:");
+        Label memberIdLabel = new Label("Member ID:");
         middlePanel.add(memberIdLabel);
 
         memberIdTextField = new TextField(20);
 
         middlePanel.add(memberIdTextField);
 
-        isbnLabel = new Label("ISBN:");
+        Label isbnLabel = new Label("ISBN:");
         middlePanel.add(isbnLabel);
 
         isbnTextField = new TextField(20);
 
         middlePanel.add(isbnTextField);
 
-        checkoutButton = new Button("Checkout");
+        Button checkoutButton = new Button("Checkout");
         checkoutButton.addActionListener(evt -> {
             String memberId = memberIdTextField.getText();
             String isbn = isbnTextField.getText();
@@ -77,7 +76,8 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
 
     private void showCheckoutEntry(CheckoutEntry entry) {
         LibrarySystem.hideAllWindows();
-        CheckoutRecordWindow.INSTANCE.setCheckoutEntries(Collections.singletonList(entry));
+        CheckoutRecordWindow.INSTANCE.addCheckoutEntry(entry);
+        CheckoutRecordWindow.INSTANCE.updateMemberInfoView();
         CheckoutRecordWindow.INSTANCE.init();
         CheckoutRecordWindow.INSTANCE.pack();
         CheckoutRecordWindow.INSTANCE.setVisible(true);

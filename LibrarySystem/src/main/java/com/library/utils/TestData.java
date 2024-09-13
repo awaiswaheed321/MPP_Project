@@ -1,8 +1,7 @@
 package com.library.utils;
 
-import com.library.classes.*;
+import com.library.domain.*;
 import com.library.enums.Auth;
-import com.library.interfaces.DataAccess;
 import com.library.services.DataAccessFacade;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.library.windows;
 
-import com.library.classes.Book;
-import com.library.classes.BookCopy;
+import com.library.domain.Book;
+import com.library.domain.BookCopy;
 import com.library.utils.Util;
 
 import javax.swing.*;

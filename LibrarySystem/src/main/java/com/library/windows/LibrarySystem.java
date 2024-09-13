@@ -1,9 +1,9 @@
 package com.library.windows;
 
 import com.library.Main;
-import com.library.classes.Author;
-import com.library.classes.Book;
-import com.library.classes.LibraryMember;
+import com.library.domain.Author;
+import com.library.domain.Book;
+import com.library.domain.LibraryMember;
 import com.library.enums.Auth;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.LibWindow;
@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.library.services;
 
-import com.library.classes.Book;
-import com.library.classes.BookCopy;
-import com.library.classes.CheckoutEntry;
-import com.library.classes.LibraryMember;
+import com.library.domain.Book;
+import com.library.domain.BookCopy;
+import com.library.domain.CheckoutEntry;
+import com.library.domain.LibraryMember;
 import com.library.exceptions.BookCopyNotAvailableException;
 import com.library.exceptions.BookNotFoundException;
 import com.library.exceptions.LibrarySystemException;

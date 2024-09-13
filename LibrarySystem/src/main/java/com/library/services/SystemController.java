@@ -1,6 +1,6 @@
 package com.library.services;
 
-import com.library.classes.*;
+import com.library.domain.*;
 import com.library.enums.Auth;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;

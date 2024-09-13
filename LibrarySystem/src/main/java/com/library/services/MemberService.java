@@ -1,6 +1,6 @@
 package com.library.services;
 
-import com.library.classes.LibraryMember;
+import com.library.domain.LibraryMember;
 import com.library.exceptions.LibraryMemberNotFoundException;
 import com.library.interfaces.DataAccess;
 

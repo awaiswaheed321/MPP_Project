@@ -1,7 +1,7 @@
 package com.library.windows;
 
-import com.library.classes.CheckoutEntry;
-import com.library.classes.LibraryMember;
+import com.library.domain.CheckoutEntry;
+import com.library.domain.LibraryMember;
 import com.library.exceptions.LibraryMemberNotFoundException;
 import com.library.interfaces.ControllerInterface;
 import com.library.services.MemberService;

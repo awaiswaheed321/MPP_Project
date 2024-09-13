@@ -1,6 +1,6 @@
 package com.library.windows;
 
-import com.library.classes.CheckoutEntry;
+import com.library.domain.CheckoutEntry;
 import com.library.exceptions.BookCopyNotAvailableException;
 import com.library.exceptions.BookNotFoundException;
 import com.library.exceptions.LibraryMemberNotFoundException;

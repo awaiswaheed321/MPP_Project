@@ -1,6 +1,6 @@
 package com.library.windows;
 
-import com.library.classes.Book;
+import com.library.domain.Book;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.LibWindow;
 import com.library.services.SystemController;

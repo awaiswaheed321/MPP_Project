@@ -1,7 +1,7 @@
 package com.library.windows;
 
-import com.library.classes.Author;
-import com.library.classes.Book;
+import com.library.domain.Author;
+import com.library.domain.Book;
 import com.library.exceptions.ValidationException;
 import com.library.interfaces.ControllerInterface;
 import com.library.services.SystemController;

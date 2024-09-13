@@ -1,7 +1,7 @@
 package com.library.utils;
 
-import com.library.classes.Author;
-import com.library.classes.LibraryMember;
+import com.library.domain.Author;
+import com.library.domain.LibraryMember;
 import com.library.interfaces.DataAccess;
 import com.library.services.DataAccessFacade;
 

@@ -1,7 +1,7 @@
 package com.library.windows;
 
-import com.library.classes.Address;
-import com.library.classes.LibraryMember;
+import com.library.domain.Address;
+import com.library.domain.LibraryMember;
 import com.library.exceptions.ValidationException;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.DataAccess;

@@ -1,7 +1,7 @@
 package com.library.windows;
 
-import com.library.classes.Book;
-import com.library.classes.CheckoutEntry;
+import com.library.domain.Book;
+import com.library.domain.CheckoutEntry;
 import com.library.utils.Util;
 
 import javax.swing.*;

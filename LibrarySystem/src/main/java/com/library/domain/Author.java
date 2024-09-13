@@ -1,8 +1,7 @@
-package com.library.classes;
+package com.library.domain;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.UUID;
 
 final public class Author extends Person implements Serializable {
     private final String bio;

@@ -1,9 +1,9 @@
 package com.library.interfaces;
 
-import com.library.classes.Author;
-import com.library.classes.Book;
-import com.library.classes.CheckoutEntry;
-import com.library.classes.LibraryMember;
+import com.library.domain.Author;
+import com.library.domain.Book;
+import com.library.domain.CheckoutEntry;
+import com.library.domain.LibraryMember;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
 

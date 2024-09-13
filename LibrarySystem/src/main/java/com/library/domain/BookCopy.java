@@ -1,4 +1,4 @@
-package com.library.classes;
+package com.library.domain;
 
 import java.io.Serial;
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package com.library.windows;
 
-import com.library.classes.Book;
+import com.library.domain.Book;
 import com.library.utils.Util;
 
 import javax.swing.*;

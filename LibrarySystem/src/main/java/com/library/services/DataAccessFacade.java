@@ -1,9 +1,9 @@
 package com.library.services;
 
-import com.library.classes.Author;
-import com.library.classes.Book;
-import com.library.classes.LibraryMember;
-import com.library.classes.User;
+import com.library.domain.Author;
+import com.library.domain.Book;
+import com.library.domain.LibraryMember;
+import com.library.domain.User;
 import com.library.interfaces.DataAccess;
 import com.library.utils.DataUtils;
 

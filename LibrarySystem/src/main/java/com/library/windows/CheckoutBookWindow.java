@@ -75,11 +75,17 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
     }
 
     private void showCheckoutEntry(CheckoutEntry entry) {
+        clearFields();
         LibrarySystem.hideAllWindows();
         CheckoutRecordWindow.INSTANCE.addCheckoutEntry(entry);
         CheckoutRecordWindow.INSTANCE.updateMemberInfoView();
         CheckoutRecordWindow.INSTANCE.init();
         CheckoutRecordWindow.INSTANCE.pack();
         CheckoutRecordWindow.INSTANCE.setVisible(true);
+    }
+
+    private void clearFields() {
+        this.isbnTextField.setText("");
+        this.memberIdTextField.setText("");
     }
 }

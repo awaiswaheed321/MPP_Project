@@ -105,7 +105,7 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
         bottomText.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
 
         username = new JTextField(10);
-        label = new JLabel("Username");
+        label = new JLabel("User ID");
         label.setFont(Util.makeSmallFont(label.getFont()));
         topText.add(username);
         bottomText.add(label);
@@ -139,8 +139,10 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
                     List<CheckoutEntry> lmCheckout = lm.getCheckouts();
                     if (lmCheckout == null || lmCheckout.isEmpty()) {
                         JOptionPane.showMessageDialog(this, "No Checkout Records Exits");
+                        clearInputs();
                         return;
                     }
+                    clearInputs();
                     LibrarySystem.hideAllWindows();
                     CheckoutRecordWindow.INSTANCE.addCheckoutEntry(lmCheckout.get(0));
                     CheckoutRecordWindow.INSTANCE.updateMemberInfoView();

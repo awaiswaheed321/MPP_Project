@@ -24,6 +24,7 @@ public class TestData {
         td.libraryMemberData();
         td.userData();
         td.addAuthors();
+        System.out.println("\n\n***********Test Data Generated. Added Authors, Books, Members and Users.***********\n\n");
     }
 
     private void addAuthors() {

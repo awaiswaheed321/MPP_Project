@@ -21,6 +21,8 @@ public class ValidationService {
         List<String> errors = new ArrayList<>();
         if (isbn == null || isbn.trim().isEmpty()) {
             errors.add("ISBN cannot be empty.");
+        } else if(!isbn.matches("\\d{2}-\\d{4}")) {
+            errors.add("Invalid ISBN format. Please enter in the format 12-1234.");
         }
         if (title == null || title.trim().isEmpty()) {
             errors.add("Title cannot be empty.");

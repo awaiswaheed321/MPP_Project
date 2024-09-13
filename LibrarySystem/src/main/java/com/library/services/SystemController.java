@@ -2,6 +2,7 @@ package com.library.services;
 
 import com.library.domain.*;
 import com.library.enums.Auth;
+import com.library.exceptions.DuplicateBookCopyCheckoutException;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
 import com.library.interfaces.ControllerInterface;
@@ -82,7 +83,7 @@ public class SystemController implements ControllerInterface {
     }
 
     @Override
-    public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException {
+    public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException, DuplicateBookCopyCheckoutException {
         return new BookService().checkout(memberId, isbn);
     }
 }

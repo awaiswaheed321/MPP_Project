@@ -4,6 +4,7 @@ import com.library.domain.Author;
 import com.library.domain.Book;
 import com.library.domain.CheckoutEntry;
 import com.library.domain.LibraryMember;
+import com.library.exceptions.DuplicateBookCopyCheckoutException;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
 
@@ -16,7 +17,7 @@ public interface ControllerInterface {
 
     boolean isValidMember(String memberId);
 
-    CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException;
+    CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException, DuplicateBookCopyCheckoutException;
 
     List<Book> allBooks();
 

@@ -4,9 +4,7 @@ import com.library.domain.Book;
 import com.library.domain.BookCopy;
 import com.library.domain.CheckoutEntry;
 import com.library.domain.LibraryMember;
-import com.library.exceptions.BookCopyNotAvailableException;
-import com.library.exceptions.BookNotFoundException;
-import com.library.exceptions.LibrarySystemException;
+import com.library.exceptions.*;
 import com.library.interfaces.DataAccess;
 
 import java.time.LocalDate;
@@ -21,8 +19,9 @@ public class BookService {
         return allBookMaps.values();
     }
 
-    public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException {
+    public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException, DuplicateBookCopyCheckoutException {
         LibraryMember member = new MemberService().getMember(memberId);
+        checkDuplicateCheckout(member, isbn);
         BookCopy bookCopy = getBookCopy(isbn);
         LocalDate now = LocalDate.now();
         LocalDate dueDate = now.plusDays(bookCopy.getBook().getMaxCheckoutLength());
@@ -32,6 +31,16 @@ public class BookService {
         da.saveBook(bookCopy.getBook());
         da.saveNewMember(member);
         return checkout;
+    }
+
+    private void checkDuplicateCheckout(LibraryMember member, String isbn) throws DuplicateBookCopyCheckoutException {
+        boolean bookAlreadyCheckedOut = member.getCheckouts().stream()
+                .map(checkout -> checkout.getBookCopy().getBook().getIsbn())
+                .anyMatch(isbn::equals);
+
+        if (bookAlreadyCheckedOut) {
+            throw new DuplicateBookCopyCheckoutException("A member cannot check out multiple copies of the same book.");
+        }
     }
 
     private BookCopy getBookCopy(String isbn) throws LibrarySystemException {

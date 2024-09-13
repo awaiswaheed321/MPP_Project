@@ -3,6 +3,7 @@ package com.library.windows;
 import com.library.domain.CheckoutEntry;
 import com.library.exceptions.BookCopyNotAvailableException;
 import com.library.exceptions.BookNotFoundException;
+import com.library.exceptions.DuplicateBookCopyCheckoutException;
 import com.library.exceptions.LibraryMemberNotFoundException;
 import com.library.interfaces.ControllerInterface;
 import com.library.services.SystemController;
@@ -61,6 +62,8 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
                 JOptionPane.showMessageDialog(this, "No book was found with the ISBN!");
             } catch (BookCopyNotAvailableException ex) {
                 JOptionPane.showMessageDialog(this, "No copy of the book is available now!");
+            } catch (DuplicateBookCopyCheckoutException ex) {
+                JOptionPane.showMessageDialog(this, "The book is already checked out for the member!");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Something went wrong, can not checkout now!");
             }
@@ -82,5 +85,14 @@ public class CheckoutBookWindow extends LibrarySystemWindow {
     private void clearFields() {
         this.isbnTextField.setText("");
         this.memberIdTextField.setText("");
+    }
+
+    @Override
+    protected void addBackButtonListener(JButton butn) {
+        butn.addActionListener(evt -> {
+            clearFields();
+            LibrarySystem.hideAllWindows();
+            LibrarySystem.INSTANCE.setVisible(true);
+        });
     }
 }

@@ -130,8 +130,8 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
         rightTextPanel.add(topText, BorderLayout.NORTH);
     }
 
-    private void addSearchButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
+    private void addSearchButtonListener(JButton button) {
+        button.addActionListener(evt -> {
             String memberId = username.getText();
             if (ci.isValidMember(memberId)) {
                 try {
@@ -162,9 +162,5 @@ public class PrintCheckoutRecord extends LibrarySystemWindow {
 
     private void clearInputs() {
         username.setText("");
-    }
-
-    private void showLoginError(String msg) {
-        JOptionPane.showMessageDialog(this, msg);
     }
 }

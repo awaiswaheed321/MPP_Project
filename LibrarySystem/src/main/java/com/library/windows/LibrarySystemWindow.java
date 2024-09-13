@@ -1,8 +1,8 @@
 package com.library.windows;
 
-import com.library.services.SystemController;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.LibWindow;
+import com.library.services.SystemController;
 
 import javax.swing.*;
 import java.awt.*;

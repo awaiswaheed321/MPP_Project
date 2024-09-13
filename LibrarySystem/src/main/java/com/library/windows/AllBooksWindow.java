@@ -1,9 +1,9 @@
 package com.library.windows;
 
 import com.library.classes.Book;
-import com.library.services.SystemController;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.LibWindow;
+import com.library.services.SystemController;
 import com.library.utils.Util;
 
 import javax.swing.*;
@@ -30,7 +30,8 @@ public class AllBooksWindow extends JFrame implements LibWindow {
     private List<Book> booksList;
 
     // Singleton class
-    private AllBooksWindow() {}
+    private AllBooksWindow() {
+    }
 
     public void init() {
         if (!isInitialized) {
@@ -95,7 +96,7 @@ public class AllBooksWindow extends JFrame implements LibWindow {
     // Method to set book data in the JTable
     public void setData(List<Book> books) {
         booksList = books;
-        if(booksTable != null) {
+        if (booksTable != null) {
             DefaultTableModel tableModel = getBookTableModel();
             booksTable.setModel(tableModel);
             booksTable.repaint();

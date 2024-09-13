@@ -1,7 +1,7 @@
 package com.library.windows;
 
-import com.library.services.SystemController;
 import com.library.interfaces.ControllerInterface;
+import com.library.services.SystemController;
 import com.library.utils.Util;
 
 import javax.swing.*;

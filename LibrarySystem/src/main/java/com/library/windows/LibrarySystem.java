@@ -182,7 +182,6 @@ public class LibrarySystem extends JFrame implements LibWindow {
     }
 
     class AllMemberIdsListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             LibrarySystem.hideAllWindows();

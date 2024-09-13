@@ -1,18 +1,15 @@
 package com.library.windows;
 
 import com.library.classes.CheckoutEntry;
-import com.library.exceptions.LibrarySystemException;
-import com.library.services.SystemController;
 import com.library.exceptions.BookCopyNotAvailableException;
 import com.library.exceptions.BookNotFoundException;
 import com.library.exceptions.LibraryMemberNotFoundException;
 import com.library.interfaces.ControllerInterface;
+import com.library.services.SystemController;
 import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class CheckoutBookWindow extends LibrarySystemWindow {
     public static final CheckoutBookWindow INSTANCE = new CheckoutBookWindow();

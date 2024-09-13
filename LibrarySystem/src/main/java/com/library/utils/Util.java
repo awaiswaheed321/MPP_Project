@@ -12,35 +12,29 @@ import java.util.*;
 
 public class Util {
     public static final Color DARK_BLUE = Color.BLUE.darker();
-    public static final Color ERROR_MESSAGE_COLOR = Color.RED.darker(); //dark red
-    public static final Color INFO_MESSAGE_COLOR = new Color(24, 98, 19); //dark green
-    public static final Color LINK_AVAILABLE = DARK_BLUE;
-    public static final Color LINK_NOT_AVAILABLE = Color.gray;
-    //rgb(18, 75, 14)
 
     public static Font makeSmallFont(Font f) {
         return new Font(f.getName(), f.getStyle(), (f.getSize() - 2));
     }
 
     public static void adjustLabelFont(JLabel label, Color color, boolean bigger) {
+        Font f;
         if (bigger) {
-            Font f = new Font(label.getFont().getName(),
+            f = new Font(label.getFont().getName(),
                     label.getFont().getStyle(), (label.getFont().getSize() + 2));
-            label.setFont(f);
         } else {
-            Font f = new Font(label.getFont().getName(),
+            f = new Font(label.getFont().getName(),
                     label.getFont().getStyle(), (label.getFont().getSize() - 2));
-            label.setFont(f);
         }
+        label.setFont(f);
         label.setForeground(color);
-
     }
 
     /**
      * Sorts a list of numeric strings in natural number order
      */
     public static List<String> numericSort(List<String> list) {
-        Collections.sort(list, new NumericSortComparator());
+        list.sort(new NumericSortComparator());
         return list;
     }
 
@@ -51,9 +45,7 @@ public class Util {
                 throw new IllegalArgumentException("Input list has non-numeric characters");
             int sInt = Integer.parseInt(s);
             int tInt = Integer.parseInt(t);
-            if (sInt < tInt) return -1;
-            else if (sInt == tInt) return 0;
-            else return 1;
+            return Integer.compare(sInt, tInt);
         }
     }
 
@@ -74,37 +66,5 @@ public class Util {
         int frameHeight = f.getSize().height;
         int frameWidth = f.getSize().width;
         f.setLocation(((width - frameWidth) / 2), (height - frameHeight) / 3);
-    }
-
-    //Returns a list of all ids of LibraryMembers whose zipcode contains the digit 3
-    public static List<String> allWhoseZipContains3() {
-        DataAccess da = new DataAccessFacade();
-        Collection<LibraryMember> members = da.readMemberMap().values();
-        List<LibraryMember> mems = new ArrayList<>();
-        mems.addAll(members);
-        //implement
-        return null;
-
-    }
-
-    //Returns a list of all ids of  LibraryMembers that have an overdue book
-    public static List<String> allHavingOverdueBook() {
-        DataAccess da = new DataAccessFacade();
-        Collection<LibraryMember> members = da.readMemberMap().values();
-        List<LibraryMember> mems = new ArrayList<>();
-        mems.addAll(members);
-        //implement
-        return null;
-
-    }
-
-    //Returns a list of all isbns of  Books that have multiple authors
-    public static List<String> allHavingMultipleAuthors() {
-        DataAccess da = new DataAccessFacade();
-        Collection<Book> books = da.readBooksMap().values();
-        List<Book> bs = new ArrayList<>();
-        bs.addAll(books);
-        //implement
-        return null;
     }
 }

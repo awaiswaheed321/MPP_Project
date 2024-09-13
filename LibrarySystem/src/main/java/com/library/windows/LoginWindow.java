@@ -6,6 +6,10 @@ import com.library.utils.Util;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 
 public class LoginWindow extends LibrarySystemWindow {
@@ -168,8 +172,8 @@ public class LoginWindow extends LibrarySystemWindow {
         rightTextPanel.add(bottomText, BorderLayout.CENTER);
     }
 
-    private void addLoginButtonListener(JButton butn) {
-        butn.addActionListener(evt -> {
+    private void addLoginButtonListener(JButton button) {
+        ActionListener loginAction = evt -> {
             String usernameValue = username.getText();
             String passwordValue = password.getText();
 
@@ -182,8 +186,20 @@ public class LoginWindow extends LibrarySystemWindow {
             } catch (Exception e) {
                 showLoginError(e.getMessage());
             }
-        });
+        };
+        button.addActionListener(loginAction);
+        KeyListener enterKeyListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loginAction.actionPerformed(null);
+                }
+            }
+        };
+        username.addKeyListener(enterKeyListener);
+        password.addKeyListener(enterKeyListener);
     }
+
 
     private void clearInputs() {
         username.setText("");

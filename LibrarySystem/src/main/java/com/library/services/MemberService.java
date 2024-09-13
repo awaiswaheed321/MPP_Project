@@ -12,16 +12,13 @@ public class MemberService {
     DataAccess da = DataAccessFacade.getInstance();
 
     private List<String> allMemberIds() {
-        List<String> retval = new ArrayList<>();
-        retval.addAll(da.readMemberMap().keySet());
-        return retval;
+        return new ArrayList<>(da.readMemberMap().keySet());
     }
 
     public boolean isValidMember(String memberId) {
         for (String id : allMemberIds()) {
             if (memberId.equals(id)) return true;
         }
-
         return false;
     }
 

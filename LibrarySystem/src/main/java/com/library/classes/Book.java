@@ -2,7 +2,10 @@ package com.library.classes;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 final public class Book implements Serializable {
     @Serial
@@ -22,7 +25,6 @@ final public class Book implements Serializable {
         copies.add(new BookCopy(this, 1, true));
     }
 
-
     public void addCopy() {
         copies.add(new BookCopy(this, copies.size() + 1, true));
     }
@@ -31,7 +33,6 @@ final public class Book implements Serializable {
         copies.add(new BookCopy(this, copyNum, true));
     }
 
-
     @Override
     public boolean equals(Object ob) {
         if (ob == null) return false;
@@ -39,7 +40,6 @@ final public class Book implements Serializable {
         Book b = (Book) ob;
         return b.isbn.equals(isbn);
     }
-
 
     public boolean isAvailable() {
         if (copies == null || copies.isEmpty()) {

@@ -1,6 +1,5 @@
 package com.library.interfaces;
 
-import com.library.classes.Address;
 import com.library.classes.Author;
 import com.library.classes.Book;
 import com.library.classes.CheckoutEntry;

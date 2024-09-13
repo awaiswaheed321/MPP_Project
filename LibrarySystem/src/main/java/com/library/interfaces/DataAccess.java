@@ -1,6 +1,9 @@
 package com.library.interfaces;
 
-import com.library.classes.*;
+import com.library.classes.Author;
+import com.library.classes.Book;
+import com.library.classes.LibraryMember;
+import com.library.classes.User;
 
 import java.util.HashMap;
 

@@ -14,8 +14,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
-@SuppressWarnings("serial")
 public class CheckoutBookWindow extends LibrarySystemWindow {
     public static final CheckoutBookWindow INSTANCE = new CheckoutBookWindow();
     ControllerInterface ci = new SystemController();

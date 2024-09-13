@@ -39,8 +39,6 @@ public class DataAccessFacade implements DataAccess {
 
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 
-
-    // implement: other save operations
     public void saveNewMember(LibraryMember member) {
         HashMap<String, LibraryMember> mems = readMemberMap();
         String memberId = member.getMemberId();
@@ -57,41 +55,28 @@ public class DataAccessFacade implements DataAccess {
 
     @SuppressWarnings("unchecked")
     public HashMap<String, Book> readBooksMap() {
-        // Returns a Map with name/value pairs being
-        // isbn -> Book
         return (HashMap<String, Book>) readFromStorage(StorageType.BOOKS);
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, LibraryMember> readMemberMap() {
-        // Returns a Map with name/value pairs being
-        // memberId -> LibraryMember
         return (HashMap<String, LibraryMember>) readFromStorage(StorageType.MEMBERS);
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, User> readUserMap() {
-        // Returns a Map with name/value pairs being
-        // userId -> User
         return (HashMap<String, User>) readFromStorage(StorageType.USERS);
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, Author> readAuthorMap() {
-        // Returns a Map with name/value pairs being
-        // userId -> User
         return (HashMap<String, Author>) readFromStorage(StorageType.AUTHORS);
     }
 
     @SuppressWarnings("unchecked")
     public HashMap<String, Address> readAddressMap() {
-        // Returns a Map with name/value pairs being
-        // userId -> User
         return (HashMap<String, Address>) readFromStorage(StorageType.ADDRESSES);
     }
-
-    ///// load methods - these place test data into the storage area
-    ///// - used just once at startup
 
     public static void saveBooksData(List<Book> bookList) {
         HashMap<String, Book> books = new HashMap<String, Book>();
@@ -169,40 +154,5 @@ public class DataAccessFacade implements DataAccess {
             }
         }
         return retVal;
-    }
-
-    final static class Pair<S, T> implements Serializable {
-        S first;
-        T second;
-
-        Pair(S s, T t) {
-            first = s;
-            second = t;
-        }
-
-        @Override
-        public boolean equals(Object ob) {
-            if (ob == null)
-                return false;
-            if (this == ob)
-                return true;
-            if (ob.getClass() != getClass())
-                return false;
-            @SuppressWarnings("unchecked")
-            Pair<S, T> p = (Pair<S, T>) ob;
-            return p.first.equals(first) && p.second.equals(second);
-        }
-
-        @Override
-        public int hashCode() {
-            return first.hashCode() + 5 * second.hashCode();
-        }
-
-        @Override
-        public String toString() {
-            return "(" + first.toString() + ", " + second.toString() + ")";
-        }
-
-        private static final long serialVersionUID = 5399827794066637059L;
     }
 }

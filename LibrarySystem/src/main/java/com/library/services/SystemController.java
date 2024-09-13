@@ -1,6 +1,9 @@
 package com.library.services;
 
-import com.library.classes.*;
+import com.library.classes.Author;
+import com.library.classes.Book;
+import com.library.classes.CheckoutEntry;
+import com.library.classes.User;
 import com.library.enums.Auth;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
@@ -8,7 +11,9 @@ import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.DataAccess;
 import com.library.utils.PasswordUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class SystemController implements ControllerInterface {
     public static Auth currentAuth = null;

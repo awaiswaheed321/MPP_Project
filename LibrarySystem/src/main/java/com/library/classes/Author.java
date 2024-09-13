@@ -7,6 +7,7 @@ import java.util.UUID;
 final public class Author extends Person implements Serializable {
     private final String bio;
     private final String authorId;
+
     public String getBio() {
         return bio;
     }

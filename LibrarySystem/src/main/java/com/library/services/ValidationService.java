@@ -19,18 +19,12 @@ public class ValidationService {
 
     public static void validateBook(String isbn, String title, String copiesStr, List<Author> selectedAuthors, boolean isCheckoutSelected) throws ValidationException {
         List<String> errors = new ArrayList<>();
-
-        // Check if ISBN is empty
         if (isbn == null || isbn.trim().isEmpty()) {
             errors.add("ISBN cannot be empty.");
         }
-
-        // Check if title is empty
         if (title == null || title.trim().isEmpty()) {
             errors.add("Title cannot be empty.");
         }
-
-        // Check if copies field is empty or not a valid positive integer
         try {
             int copies = Integer.parseInt(copiesStr);
             if (copies <= 0) {
@@ -39,18 +33,12 @@ public class ValidationService {
         } catch (NumberFormatException e) {
             errors.add("Copies must be a valid number.");
         }
-
-        // Check if authors are selected
         if (selectedAuthors == null || selectedAuthors.isEmpty()) {
             errors.add("Please select at least one author.");
         }
-
-        // Check if a checkout period is selected
         if (!isCheckoutSelected) {
             errors.add("Please select a checkout length.");
         }
-
-        // If there are any errors, throw ValidationException
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
@@ -60,35 +48,24 @@ public class ValidationService {
                                       String phoneNumber, String street, String city,
                                       String state, String zip) throws ValidationException {
         SystemController sc = new SystemController();
-
         List<String> errors = new ArrayList<>();
-
-        // Check if any fields are empty
         if (memberId == null || memberId.trim().isEmpty()) {
             errors.add("Member ID is required.");
         }
         validateUserInfo(firstName, lastName, phoneNumber, street, city, state, zip, errors);
 
-        // Check if the member ID already exists
         if (sc.isValidMember(memberId)) {
             errors.add("The Member ID already exists.");
         }
-
-        // Validate that phone number contains exactly 10 digits
         if (phoneNumber != null && !phoneNumber.matches("\\d{10}")) {
             errors.add("Invalid Phone Number. Please enter a 10-digit number.");
         }
-
-        // Validate zip code format (5 digits for US zip code)
         if (zip != null && !zip.matches("\\d{5}")) {
             errors.add("Invalid Zip Code. Please enter a 5-digit zip code.");
         }
-
-        // Validate state (assuming 2-letter code)
         if (state != null && !state.matches("[A-Z]{2}") || !validStates.contains(state)) {
             errors.add("Invalid State. Please enter a 2-letter state code.");
         }
-
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
@@ -98,29 +75,19 @@ public class ValidationService {
                                       String street, String city, String state,
                                       String zip, String bio) throws ValidationException {
         List<String> errors = new ArrayList<>();
-
-        // Check if any fields are empty
         validateUserInfo(firstName, lastName, telephone, street, city, state, zip, errors);
         if (bio == null || bio.trim().isEmpty()) {
             errors.add("Biography is required.");
         }
-
-        // Validate phone number (e.g., 10 digits)
         if (telephone != null && !telephone.matches("\\d{10}")) {
             errors.add("Invalid Phone Number. Please enter a 10-digit number.");
         }
-
-        // Validate zip code format (5 digits for US zip code)
         if (zip != null && !zip.matches("\\d{5}")) {
             errors.add("Invalid Zip Code. Please enter a 5-digit zip code.");
         }
-
-        // Validate state (assuming 2-letter code)
         if (state != null && (!state.matches("[A-Z]{2}") || !validStates.contains(state))) {
             errors.add("Invalid State. Please enter a 2-letter state code.");
         }
-
-        // Throw validation exception if there are errors
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }

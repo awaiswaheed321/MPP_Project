@@ -18,8 +18,7 @@ public class BookService {
 
     private Collection<Book> allBooks() {
         HashMap<String, Book> allBookMaps = da.readBooksMap();
-        Collection<Book> books = allBookMaps.values();
-        return books;
+        return allBookMaps.values();
     }
 
     public CheckoutEntry checkout(String memberId, String isbn) throws LibrarySystemException {
@@ -43,7 +42,6 @@ public class BookService {
                 break;
             }
         }
-
         if (theBook == null) throw new BookNotFoundException();
 
         BookCopy bookCopy = theBook.getNextAvailableCopy();

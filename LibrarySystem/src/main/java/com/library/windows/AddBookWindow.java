@@ -2,8 +2,10 @@ package com.library.windows;
 
 import com.library.classes.Author;
 import com.library.classes.Book;
+import com.library.exceptions.ValidationException;
 import com.library.interfaces.ControllerInterface;
 import com.library.services.SystemController;
+import com.library.services.ValidationService;
 import com.library.utils.Util;
 
 import javax.swing.*;
@@ -186,61 +188,37 @@ public class AddBookWindow extends LibrarySystemWindow {
             String isbn = isbnField.getText().trim();
             String title = titleField.getText().trim();
             String copiesStr = copiesField.getText().trim();
-            int maxCheckoutLength;
-
-            // Determine max checkout length from selected radio button
-            if (checkout21Days.isSelected()) {
-                maxCheckoutLength = 21;
-            } else if (checkout7Days.isSelected()) {
-                maxCheckoutLength = 7;
-            } else {
-                JOptionPane.showMessageDialog(null, "Please select a checkout length.");
-                return;
-            }
-
-            // Validate inputs
-            if (isbn.isEmpty() || title.isEmpty() || copiesStr.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "All fields must be filled.");
-                return;
-            }
-
-            // Get selected authors
             List<Author> selectedAuthors = authorList.getSelectedValuesList();
-
-            if (selectedAuthors.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please select at least one author.");
-                return;
-            }
+            boolean isCheckoutSelected = checkout21Days.isSelected() || checkout7Days.isSelected();
+            int maxCheckoutLength = checkout21Days.isSelected() ? 21 : 7;
 
             try {
-                int copies = Integer.parseInt(copiesStr);
+                // Validate inputs using ValidationService
+                ValidationService.validateBook(isbn, title, copiesStr, selectedAuthors, isCheckoutSelected);
 
-                // Create a new Book instance with selected authors
+                // If validation is successful, proceed with book creation
+                int copies = Integer.parseInt(copiesStr);
                 Book newBook = new Book(isbn, title, maxCheckoutLength, selectedAuthors);
 
-                // Add book copies
+                // Add additional copies
                 for (int i = 0; i < copies - 1; i++) {
                     newBook.addCopy();
                 }
-
-                // Save the new book
                 ci.saveNewBook(newBook);
-
-                // Clear inputs after successful addition
                 clearFields();
-
-                // Show success message
                 JOptionPane.showMessageDialog(null, "Book added successfully!");
-
-                // Go back to the main screen after adding
                 LibrarySystem.hideAllWindows();
                 LibrarySystem.INSTANCE.setVisible(true);
 
+            } catch (ValidationException ve) {
+                // Display validation errors
+                JOptionPane.showMessageDialog(null, String.join("\n", ve.getErrors()), "Validation Errors", JOptionPane.ERROR_MESSAGE);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Copies must be a valid number.");
             }
         }
     }
+
 
     @Override
     public boolean isInitialized() {

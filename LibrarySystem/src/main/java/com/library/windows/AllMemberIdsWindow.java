@@ -36,7 +36,7 @@ public class AllMemberIdsWindow extends LibrarySystemWindow {
         lowerPanel = new JPanel();
         FlowLayout fl = new FlowLayout(FlowLayout.LEFT);
         lowerPanel.setLayout(fl);
-        JButton backButton = new JButton("<== Back to Main");
+        JButton backButton = new JButton("<  Back to Main");
         addBackButtonListener(backButton);
         lowerPanel.add(backButton);
     }

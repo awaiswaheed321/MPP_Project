@@ -16,7 +16,7 @@ public abstract class LibrarySystemWindow extends JFrame implements LibWindow {
     protected JPanel middlePanel;
     protected JPanel lowerPanel;
 
-    protected String jButtonText = "<== Back to Main";
+    protected String jButtonText = "<  Back to Main";
 
     public abstract void defineTopPanel();
 

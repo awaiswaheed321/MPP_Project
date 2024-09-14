@@ -159,7 +159,7 @@ public class AddBookWindow extends LibrarySystemWindow {
         JButton clearButton = new JButton("Clear Fields");
         clearButton.addActionListener(e -> clearFields());
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Back");
         cancelButton.addActionListener(e -> {
             this.setVisible(false);
             LibrarySystem.INSTANCE.setVisible(true);

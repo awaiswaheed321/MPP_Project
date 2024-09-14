@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 final public class Book implements Serializable {
     @Serial
@@ -106,6 +107,12 @@ final public class Book implements Serializable {
             }
         }
         return null;
+    }
+
+    public String getAuthorsString() {
+        return authors.stream()
+                .map(author -> author.getFirstName() + " " + author.getLastName())
+                .collect(Collectors.joining(", "));
     }
 
     public int getMaxCheckoutLength() {

@@ -79,6 +79,7 @@ public class AddBookCopyWindow extends LibrarySystemWindow {
         JLabel label = new JLabel("Copy Number");
         copyNumTextField = new JTextField();
         copyNumTextField.setText(String.valueOf(book.getCopies().size() + 1));
+        copyNumTextField.setEnabled(false);
         copyNumTextField.setColumns(30);
         copyNumTextField.addKeyListener(new KeyListener() {
             @Override
@@ -127,6 +128,13 @@ public class AddBookCopyWindow extends LibrarySystemWindow {
             bookCopies.repaint();
 
             JOptionPane.showMessageDialog(this, "Book Copy added successfully.");
+
+            AddBookCopyWindow.INSTANCE.init(book);
+            AddBookCopyWindow.INSTANCE.pack();
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            AddBookCopyWindow.INSTANCE.setSize((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.5));
+            Util.centerFrameOnDesktop(AddBookCopyWindow.INSTANCE);
+            AddBookCopyWindow.INSTANCE.setVisible(true);
         });
         middlePanel.add(submitButton, BorderLayout.SOUTH);
     }

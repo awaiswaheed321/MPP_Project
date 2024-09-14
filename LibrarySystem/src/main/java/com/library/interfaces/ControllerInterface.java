@@ -7,6 +7,7 @@ import com.library.domain.LibraryMember;
 import com.library.exceptions.DuplicateBookCopyCheckoutException;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
+import com.library.exceptions.ValidationException;
 
 import java.util.List;
 
@@ -26,6 +27,10 @@ public interface ControllerInterface {
     List<Author> getAllAuthors();
 
     void saveNewBook(Book book);
+
+    String saveNewMember(String firstName, String lastName,
+                                      String phoneNumber, String street, String city,
+                                      String state, String zip) throws ValidationException;
 
     List<LibraryMember> getAllMembers();
 }

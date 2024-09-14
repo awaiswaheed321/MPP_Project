@@ -5,8 +5,10 @@ import com.library.enums.Auth;
 import com.library.exceptions.DuplicateBookCopyCheckoutException;
 import com.library.exceptions.LibrarySystemException;
 import com.library.exceptions.LoginException;
+import com.library.exceptions.ValidationException;
 import com.library.interfaces.ControllerInterface;
 import com.library.interfaces.DataAccess;
+import com.library.utils.IDGeneratorUtil;
 import com.library.utils.PasswordUtil;
 
 import java.util.ArrayList;
@@ -67,6 +69,18 @@ public class SystemController implements ControllerInterface {
     @Override
     public void saveNewBook(Book book) {
         da.saveNewBook(book);
+    }
+
+    @Override
+    public String saveNewMember(String firstName, String lastName, String phoneNumber, String street, String city, String state, String zip) throws ValidationException {
+        ValidationService.validateMember(firstName, lastName, phoneNumber, street, city, state, zip);
+
+        Address address = new Address(street, city, state, zip);
+        String memberId = IDGeneratorUtil.getNextMemberId();
+        LibraryMember lm = new LibraryMember(memberId, firstName, lastName, phoneNumber, address);
+        da.saveNewMember(lm);
+
+        return memberId;
     }
 
     @Override

@@ -17,7 +17,6 @@ import java.awt.*;
 public class AddMemberWindow extends LibrarySystemWindow {
     public static final AddMemberWindow INSTANCE = new AddMemberWindow();
     ControllerInterface ci = new SystemController();
-    DataAccess da = new DataAccessFacade();
 
     private TextField memberFirstNameTextField;
     private TextField memberLastNameTextField;
@@ -135,13 +134,7 @@ public class AddMemberWindow extends LibrarySystemWindow {
             String zip = memberZipTextField.getText();
 
             try {
-                ValidationService.validateMember(firstName, lastName, phoneNumber, street, city, state, zip);
-
-                Address address = new Address(street, city, state, zip);
-                String memberId = IDGeneratorUtil.getNextMemberId();
-                LibraryMember lm = new LibraryMember(memberId, firstName, lastName, phoneNumber, address);
-
-                da.saveNewMember(lm);
+                String memberId = ci.saveNewMember(firstName, lastName, phoneNumber, street, city, state, zip);
                 JOptionPane.showMessageDialog(this, "Member Added! Member ID: " + memberId);
                 clearFields();
             } catch (ValidationException ve) {

@@ -176,15 +176,18 @@ public class LoginWindow extends LibrarySystemWindow {
         ActionListener loginAction = evt -> {
             String usernameValue = username.getText();
             String passwordValue = password.getText();
+            if(usernameValue.isEmpty() || passwordValue.isEmpty()) {
+                showLoginError("Please enter a valid username/password.");
+            } else {
+                try {
+                    SystemController sc = new SystemController();
+                    sc.login(usernameValue, passwordValue);
+                    clearInputs();
+                    showMainWindow();
 
-            try {
-                SystemController sc = new SystemController();
-                sc.login(usernameValue, passwordValue);
-                clearInputs();
-                showMainWindow();
-
-            } catch (Exception e) {
-                showLoginError(e.getMessage());
+                } catch (Exception e) {
+                    showLoginError(e.getMessage());
+                }
             }
         };
         button.addActionListener(loginAction);
